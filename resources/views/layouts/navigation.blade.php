@@ -5,16 +5,45 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ Auth::user()->usertype == 'admin' ? route('admin.dashboard') : route('dashboard')}}">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link :href="Auth::user()->usertype == 'admin' ? route('admin.dashboard') : route('dashboard')" :active="Auth::user()->usertype == 'admin' ? request()->routeIs('admin.dashboard') : request()->routeIs('dashboard') ">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                <!-- admin links -->
+
+                @if (Auth::user()->usertype == 'admin')
+                    <x-nav-link href="admincars" :active="request()->routeIs('admin.admincars')">
+                        {{ __('Cars') }}
+                    </x-nav-link>
+                    <x-nav-link href="inventory" :active="request()->routeIs('admin.inventory')">
+                        {{ __('Inventory') }}
+                    </x-nav-link>
+                    <x-nav-link href="sales" :active="request()->routeIs('admin.sales')">
+                        {{ __('Sales') }}
+                    </x-nav-link>
+                    <x-nav-link href="employees" :active="request()->routeIs('admin.employees')">
+                        {{ __('Employees') }}
+                    </x-nav-link>
+                @endif
+
+                 <!-- user links -->
+
+                @if (Auth::user()->usertype == 'user')
+                    <x-nav-link href="usercars" :active="request()->routeIs('user.usercars')">
+                        {{ __('Cars') }}
+                    </x-nav-link>
+                    <x-nav-link href="renthistory" :active="request()->routeIs('user.renthistory')">
+                        {{ __('Rental Hisory') }}
+                    </x-nav-link>
+                @endif
+
                 </div>
             </div>
 
@@ -70,6 +99,34 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            <!-- admin links -->
+
+                @if (Auth::user()->usertype == 'admin')
+                    <x-responsive-nav-link href="admincars" :active="request()->routeIs('admin.admincars')">
+                        {{ __('Cars') }}
+                    </x-responsive-nav-link>
+                    <x-nav-link href="inventory" :active="request()->routeIs('admin.inventory')">
+                        {{ __('Inventory') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link href="sales" :active="request()->routeIs('admin.sales')">
+                        {{ __('Sales') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link href="employees" :active="request()->routeIs('admin.employees')">
+                        {{ __('Employees') }}
+                    </x-responsive-nav-link>
+                @endif
+
+                 <!-- user links -->
+
+                @if (Auth::user()->usertype == 'user')
+                    <x-responsive-nav-link href="usercars" :active="request()->routeIs('user.usercars')">
+                        {{ __('Cars') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link href="renthistory" :active="request()->routeIs('user.renthistory')">
+                        {{ __('Rental Hisory') }}
+                    </x-responsive-nav-link>
+                @endif
         </div>
 
         <!-- Responsive Settings Options -->

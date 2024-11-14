@@ -1,4 +1,5 @@
 import './bootstrap';
+import 'slick-carousel';
 
 import Alpine from 'alpinejs';
 
