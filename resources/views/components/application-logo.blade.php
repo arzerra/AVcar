@@ -1,0 +1,1 @@
+<img src="{{ asset('images/av.png')}}" alt="Company logo" width="120px"/>
