@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\UserMiddleware;
+use App\Http\Middleware\IsAdmin;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\UserCarsController;
@@ -14,6 +15,9 @@ use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\AdminCarsController;
 use App\Http\Controllers\DateController;
+use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\AddAdminController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -64,8 +68,20 @@ Route::get('/rentprocess', function () {
     return view('user.rentprocess');
 })->name('rentprocess');
 
-Route::get('/dateform', [DateController::class, 'showForm']);
-Route::post('/savedate', [DateController::class, 'store'])->name('saveDate');
+Route::get('/usercars/paymentprocess', function () {
+    return view('user.usercars.paymentprocess');
+})->name('user.paymentprocess');
+
+Route::get('/admin/add', function () {
+    return view('admin.add-employee');
+})->name('addemployee');
+
+
+
+
+
+Route::get('/dateform', [DateController::class, 'showForm'])->name('dateform');
+Route::post('/dateform', [DateController::class, 'store'])->name('saveDate');
 
 Route::get('/cars', function () {
     return view('user.cars');
@@ -79,8 +95,6 @@ Route::get('/inventory', function () {
     return view('user.inventory');
 })->middleware(['auth'])->name('user.inventory');
 
-
-// Route::get('/home',[HomeController::class,'index']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -110,3 +124,13 @@ Route::middleware(['auth', 'adminMiddleware'])->group(function(){
     Route::get('/admin/employees', [EmployeesController::class, 'index'])->name('admin.employees');
     Route::get('/admin/sales', [SalesController::class, 'index'])->name('admin.sales');
 });
+
+Route::get('/admin/add', function () {
+    return view('admin.add-employee');
+})->name('addemployee');
+
+Route::post('/admin/add', [AddAdminController::class, 'add'])->name('addemployee');
+
+Route::get('/admin/employees', [AddAdminController::class, 'list'])->name('admin.employees');
+
+

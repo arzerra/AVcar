@@ -77,17 +77,45 @@
 
         <script>
         const cards = [
-            { title: "Toyota Vios", imgSrc: "car1.png", 
+            { title: "Toyota Vios", 
+            imgSrc: "car1.png", 
             seating: "Seating: 5 People", 
             fueltype: "Fuel Type: Gasoline", 
-            tankcaps: "Tank Caps.: 42 Liters", 
-            fuelcons: "Fuel Cons.: 12.44 km/l", 
+            tankcaps: "Tank Caps.: 42L", 
+            stocks: "Stocks: ", 
             trans: "Trans: Automatic", 
-            rental: "Rental: Php750/Day" },
+            rental: "Rental: ₱750/Day" },
             
-            { title: "Mitsubishi Mirage", imgSrc: "car2.png", description: "The Compact category offers affordable and practical vehicles with comfortable interiors, excellent fuel economy." },
-            { title: "Honda City", imgSrc: "car3.png", description: "Full-size cars are popular for business travelers and longer trips, offering luxurious features and comfortable interiors." },
-            { title: "Suzuki Alto", imgSrc: "car4.png", description: "Luxury vehicles offer unparalleled luxury and performance, ideal for executives, VIPs, and anyone who wants to travel in style." },
+                  { 
+            title: "Mitsubishi Mirage", 
+            imgSrc: "car2.png", 
+            seating: "Seating: 5 People", 
+            fueltype: "Fuel Type: Gasoline", 
+            tankcaps: "Tank Caps.: 40L", 
+            stocks: "Stocks: ", 
+            trans: "Trans: Manual", 
+            rental: "Rental: ₱600/Day" 
+        },
+        { 
+            title: "Honda City", 
+            imgSrc: "car3.png", 
+            seating: "Seating: 5 People", 
+            fueltype: "Fuel Type: Gasoline", 
+            tankcaps: "Tank Caps.: 42L", 
+            stocks: "Stocks: ",  
+            trans: "Trans: Automatic", 
+            rental: "Rental: ₱800/Day" 
+        },
+        { 
+            title: "Suzuki Alto", 
+            imgSrc: "car4.png", 
+            seating: "Seating: 4 People", 
+            fueltype: "Fuel Type: Gasoline", 
+            tankcaps: "Tank Caps.: 35L", 
+            stocks: "Stocks: ", 
+            trans: "Trans: Automatic", 
+            rental: "Rental: ₱450/Day" 
+        }
         ];
 
         let currentPage = 1;
@@ -119,7 +147,7 @@
                             </p>
                             <p>
                                 <b>${card.fueltype}</b><br>
-                                <b>${card.fuelcons}</b><br>
+                                <b>${card.stocks}</b><br>
                                 <b>${card.rental}</b>
                             </p>
                         </div>

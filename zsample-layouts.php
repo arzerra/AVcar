@@ -623,6 +623,64 @@
 
 
 
+                <!-- CREATE EMPLOYEE -->
+<!-- Success Message Alert
+        @if(session('success'))
+            <div class="alert alert-success bg-green-100 text-green-700 px-4 py-2 rounded">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        <div class="form-container">
+            <form method="POST" action="{{ route('admin.createEmployee') }}">
+                @csrf
+
+                <div class="form-group">
+                    <label for="usertype">User Type</label>
+                    <input type="text" id="usertype" name="usertype" required value="{{ old('usertype') }}">
+                    @error('usertype')
+                        <div class="text-red-500 text-sm">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required value="{{ old('name') }}">
+                    @error('name')
+                        <div class="text-red-500 text-sm">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required value="{{ old('email') }}">
+                    @error('email')
+                        <div class="text-red-500 text-sm">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                    @error('password')
+                        <div class="text-red-500 text-sm">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="password_confirmation">Confirm Password</label>
+                    <input type="password" id="password_confirmation" name="password_confirmation" required>
+                    @error('password_confirmation')
+                        <div class="text-red-500 text-sm">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <button class="form-submit-btn bg-blue-500 text-white px-4 py-2 rounded" type="submit">Create Employee</button>
+            </form>
+        </div> -->
+
+
+
 
 
                 

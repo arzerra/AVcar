@@ -19,7 +19,7 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/welcome.css', 
-    'resources/css/usercars.css', 'resources/css/rentprocess.css'])
+    'resources/css/usercars.css', 'resources/css/rentprocess.css', 'resources/css/admin-emp.css'])
 </head>
 
     <body class="font-sans antialiased">
@@ -86,5 +86,7 @@
         }
     }
 </script>
+
+
     </body>
 </html>

@@ -37,6 +37,7 @@
             </a>
         </div>
 
+
     
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-8">
             
@@ -76,10 +77,45 @@
 
         <script>
         const cards = [
-            { title: "Economy", imgSrc: "car1.png", description: "The Economy category is ideal for budget-conscious renters who prioritize fuel efficiency and affordability." },
-            { title: "Compact", imgSrc: "car2.png", description: "The Compact category offers affordable and practical vehicles with comfortable interiors, excellent fuel economy." },
-            { title: "Full-Size", imgSrc: "car3.png", description: "Full-size cars are popular for business travelers and longer trips, offering luxurious features and comfortable interiors." },
-            { title: "Luxury", imgSrc: "car4.png", description: "Luxury vehicles offer unparalleled luxury and performance, ideal for executives, VIPs, and anyone who wants to travel in style." },
+            { title: "Toyota Vios", 
+            imgSrc: "car1.png", 
+            seating: "Seating: 5 People", 
+            fueltype: "Fuel Type: Gasoline", 
+            tankcaps: "Tank Caps.: 42L", 
+            stocks: "Stocks: ", 
+            trans: "Trans: Automatic", 
+            rental: "Rental: ₱750/Day" },
+            
+                  { 
+            title: "Mitsubishi Mirage", 
+            imgSrc: "car2.png", 
+            seating: "Seating: 5 People", 
+            fueltype: "Fuel Type: Gasoline", 
+            tankcaps: "Tank Caps.: 40L", 
+            stocks: "Stocks: ", 
+            trans: "Trans: Manual", 
+            rental: "Rental: ₱600/Day" 
+        },
+        { 
+            title: "Honda City", 
+            imgSrc: "car3.png", 
+            seating: "Seating: 5 People", 
+            fueltype: "Fuel Type: Gasoline", 
+            tankcaps: "Tank Caps.: 42L", 
+            stocks: "Stocks: ",  
+            trans: "Trans: Automatic", 
+            rental: "Rental: ₱800/Day" 
+        },
+        { 
+            title: "Suzuki Alto", 
+            imgSrc: "car4.png", 
+            seating: "Seating: 4 People", 
+            fueltype: "Fuel Type: Gasoline", 
+            tankcaps: "Tank Caps.: 35L", 
+            stocks: "Stocks: ", 
+            trans: "Trans: Automatic", 
+            rental: "Rental: ₱450/Day" 
+        }
         ];
 
         let currentPage = 1;
@@ -101,10 +137,23 @@
                         </div>
                         <div class="relative flex items-center gap-6 lg:items-end">
                             <div id="docs-card-content" class="flex items-start gap-6 lg:flex-col">
-                                <div class="pt-3 sm:pt-5 lg:pt-0">
-                                    <h2 class="text-xl font-semibold text-white dark:text-white">${card.title}</h2>
-                                    <p class="mt-4 text-sm/relaxed text-white dark:text-white">${card.description}</p>
-                                </div>
+                        <div class="pt-3 sm:pt-5 lg:pt-0">
+                            <h2 class="text-xl font-semibold text-white dark:text-white">${card.title}</h2>
+                        <div class="mt-3 text-sm/relaxed text-white dark:text-white grid grid-cols-2 gap-x-4">
+                            <p>
+                                <b>${card.seating}</b><br>
+                                <b>${card.tankcaps}</b><br>
+                                <b>${card.trans}</b>
+                            </p>
+                            <p>
+                                <b>${card.fueltype}</b><br>
+                                <b>${card.stocks}</b><br>
+                                <b>${card.rental}</b>
+                            </p>
+                        </div>
+
+                        </div>
+
                             </div>
                             <svg class="size-6 shrink-0 stroke-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"/>
