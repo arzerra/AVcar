@@ -34,4 +34,14 @@ class AddAdminController extends Controller
         return view('admin.employees', ['admins' => $admins]);
     }
 
+    public function delete($id)
+    {
+        $isDeleted = User::destroy($id);
+
+        if ($isDeleted) {
+            return redirect('/admin/employees')->with('success', 'Record deleted successfully.');
+        } else {
+            return redirect('/admin/employees')->with('error', 'Failed to delete the record.');
+        }
+    }
 }

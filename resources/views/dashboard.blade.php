@@ -17,6 +17,4 @@
         </div>
     </div>
 
-        <!-- JavaScript -->
-
 </x-app-layout>

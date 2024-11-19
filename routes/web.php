@@ -18,6 +18,7 @@ use App\Http\Controllers\DateController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\AddAdminController;
+use App\Http\Controllers\CarController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -72,12 +73,61 @@ Route::get('/usercars/paymentprocess', function () {
     return view('user.usercars.paymentprocess');
 })->name('user.paymentprocess');
 
-Route::get('/admin/add', function () {
-    return view('admin.add-employee');
-})->name('addemployee');
+
+
+// Admin Car Categories
+Route::prefix('admin')->middleware(['auth', 'adminMiddleware'])->group(function () {
+    Route::get('/economy', function () {
+        return view('admin.admincars.economy');
+    })->name('admin.economy');
+
+    Route::get('/compact', function () {
+    return view('admin.admincars.compact');
+    })->name('admin.compact');
+
+    Route::get('/fullsize', function () {
+        return view('admin.admincars.fullsize');
+    })->name('admin.fullsize');
+
+    Route::get('/luxury', function () {
+        return view('admin.admincars.luxury');
+    })->name('admin.luxury');
+
+    Route::get('/suv', function () {
+        return view('admin.admincars.suv');
+    })->name('admin.suv');
+
+    Route::get('/van', function () {
+        return view('admin.admincars.van');
+    })->name('admin.van');
+
+    Route::get('/sports', function () {
+        return view('admin.admincars.sports');
+    })->name('admin.sports');
+
+    Route::get('/truck', function () {
+        return view('admin.admincars.truck');
+    })->name('admin.truck');
+
+    Route::get('/ecars', function () {
+        return view('admin.admincars.ecars');
+    })->name('admin.ecars');
+
+    Route::get('/test', function () {
+        return view('admin.admincars.test');
+    })->name('admin.test');
+
+
+    Route::get('/addcars', function () {
+        return view('admin.addcars');
+    })->name('addcars');
 
 
 
+
+
+
+});
 
 
 Route::get('/dateform', [DateController::class, 'showForm'])->name('dateform');
@@ -119,7 +169,7 @@ Route::middleware(['auth', 'userMiddleware'])->group(function(){
 Route::middleware(['auth', 'adminMiddleware'])->group(function(){
 
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-    Route::get('/admin/admincars', [UserCarsController::class, 'index'])->name('admin.admincars');
+    Route::get('/admin/admincars', [AdminCarsController::class, 'index'])->name('admin.admincars');
     Route::get('/admin/inventory', [InventoryController::class, 'index'])->name('admin.inventory');
     Route::get('/admin/employees', [EmployeesController::class, 'index'])->name('admin.employees');
     Route::get('/admin/sales', [SalesController::class, 'index'])->name('admin.sales');
@@ -129,8 +179,15 @@ Route::get('/admin/add', function () {
     return view('admin.add-employee');
 })->name('addemployee');
 
+
+
 Route::post('/admin/add', [AddAdminController::class, 'add'])->name('addemployee');
 
 Route::get('/admin/employees', [AddAdminController::class, 'list'])->name('admin.employees');
+
+Route::delete('delete/{id}', [AddAdminController::class, 'delete'])->name('admin.employees.delete');
+
+
+Route::post('/add-car', [CarController::class, 'store'])->name('addcar');
 
 
