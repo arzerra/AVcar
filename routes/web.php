@@ -19,6 +19,7 @@ use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\AddAdminController;
 use App\Http\Controllers\CarController;
+use App\Http\Controllers\CarStocksController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -189,5 +190,7 @@ Route::delete('delete/{id}', [AddAdminController::class, 'delete'])->name('admin
 
 
 Route::post('/add-car', [CarController::class, 'store'])->name('addcar');
+
+Route::get('/carstock', [CarStocksController::class, 'index']);
 
 

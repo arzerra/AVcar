@@ -32,7 +32,7 @@
             <form action="{{ route('admin.employees.delete', $admin->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this record?');">
                 @csrf
                 @method('DELETE')
-                <button class="bg-black text-white border-2 border-gray-300 px-4 py-1 text-sm font-small rounded-md hover:bg-gray-700 hover:border-gray-400 transition duration-300 ease-in-out">
+                <button class="bg-black text-red-500 border-2 border-gray-300 px-4 py-1 text-sm font-small rounded-md hover:bg-gray-700 hover:border-gray-400 transition duration-300 ease-in-out">
                     x
                 </button>
             </form>

@@ -168,6 +168,33 @@
             document.getElementById('next-btn').disabled = page * cardsPerPage >= cards.length;
         }
 
+        document.addEventListener("DOMContentLoaded", () => {
+    // Fetch car stocks from the Laravel API
+    fetch('/api/cars')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch car stocks');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Update card stocks based on the API response
+            cards.forEach(card => {
+                const stock = data.find(item => item.carName === card.title); // Match by carName
+                if (stock) {
+                    card.stocks += stock.carCount; // Append carCount to stocks
+                } else {
+                    card.stocks += "0"; // Default if no match is found
+                }
+            });
+
+            // Render the cards with updated stocks
+            renderCards(currentPage);
+        })
+        .catch(error => console.error('Error fetching car stocks:', error));
+});
+
+
         document.getElementById('prev-btn').addEventListener('click', () => {
             if (currentPage > 1) {
                 currentPage--;
@@ -184,4 +211,5 @@
 
         renderCards(currentPage);
     </script>
+    <script src="{{ asset('js/your-script.js') }}"></script>
 </x-app-layout>

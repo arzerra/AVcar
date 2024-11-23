@@ -29,7 +29,7 @@
     </head>
 
     <body class="font-sans antialiased dark:bg-black dark:text-white/50">
-        <header id="home"  class="bg-black shadow-lg">
+        <header class="bg-black shadow-lg sticky top-0 z-50">
             <nav class="flex items-center justify-between px-8 py-4">
                 <div class="flex items-center">
                     <a href="{{ route('home') }}" class="text-lg px-2 py-1"><img src="{{ asset('images/av.png') }}" width="200" alt="AV Logo" /></a>
@@ -72,7 +72,7 @@
 
         
       
-       <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
+       <div id="home" class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
         
         <div class="carousel">
             <div class="carousel-item">
@@ -301,7 +301,7 @@
             </div>
         </footer>
         <!-- back to top button -->
-        <div  id="car" class="items-center justify-center text-center" style="display: flex; align-items: center; justify-content: center;">
+        <div  id="" class="items-center justify-center text-center" style="display: flex; align-items: center; justify-content: center;">
         <a href="#home"><button class="button">
         <svg class="svgIcon" viewBox="0 0 384 512">
             <path

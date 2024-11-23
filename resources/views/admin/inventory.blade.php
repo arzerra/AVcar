@@ -191,22 +191,7 @@
                 <div class="p-6 text-gray-800 dark:text-gray-200 text-center text-3xl">
                     {{ __("Economy") }}
                 </div>
-            </div><br>
-
-                           <div class="toggle-container">
-                    <input class="toggle-input" type="checkbox">
-                    <div class="toggle-handle-wrapper">
-                        <div class="toggle-handle">
-                        <div class="toggle-handle-knob"></div>
-                        <div class="toggle-handle-bar-wrapper">
-                            <div class="toggle-handle-bar"></div>
-                        </div>
-                        </div>
-                    </div>
-                    <div class="toggle-base">
-                        <div class="toggle-base-inside"></div>
-                    </div>
-                    </div>
+            </div>
 
             <div class="py-12 form-container">
  
