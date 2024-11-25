@@ -15,6 +15,6 @@ class IsAdmin
             return $next($request);
         }
 
-        return redirect('/'); // Redirect if not an admin
+        return redirect('/');
     }
 }

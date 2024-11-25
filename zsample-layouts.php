@@ -680,7 +680,143 @@
         </div> -->
 
 
+        <!--     <div id="car-modal" class="fixed inset-0 flex items-center justify-center hidden bg-black bg-opacity-50 z-50">
+        <div class="bg-white p-8 rounded-lg w-1/3 h-auto items-center justify-center">
+
+            <div class="flex items-center justify-center">
+                <h2 id="modal-title" class="text-2xl font-semibold">Proceed to Payment</h2>
+            </div>
+            
+            <div id="modal-content" class="mt-4 flex items-center justify-center">
+                <p class="text-lg">Are you sure you want to proceed with the rental?</p>
+            </div>
+
+            <div class="flex items-center justify-center gap-4">
+                <button class="bg-green-500 p-2 mt-4 rounded text-white">Proceed</button>
+                <button id="close-modal" class="mt-4 text-white bg-red-500 p-2 rounded">Close</button>
+            </div>
+            
+        </div>
+    </div> -->
 
 
 
-                
+
+
+                <!-- <div id="car-modal" class="fixed inset-0 flex items-center justify-center hidden bg-black bg-opacity-50 z-50">
+    <div class="bg-white p-8 rounded-2xl w-1/3 h-auto items-center justify-center">
+
+        <div class="flex items-center justify-center">
+            <h2 id="modal-title" class="text-2xl font-semibold">Rent Process</h2>
+        </div>
+        
+
+        <div class="mt-8">
+        <form action="/carRent" method="POST" >
+            @csrf
+                <input type="hidden" id="carID" name="carID">
+                <input type="hidden" id="carName" name="carName">
+            <div class="mb-1 input-container">
+                <label class="form-label label" disable>Request Date</label><br>
+                <input type="text" id="todays-date" style="text-align: center;" readonly disable>
+                <div class="underline"></div>
+            </div>
+
+            <div class="mb-1 input-container">
+                <label for="selected_date" class="form-label label">Date of Return</label><br>
+                <input type="text" class="form-control" id="datepicker" name="selected_date" required>
+                <div class="underline"></div>
+            </div>
+
+            <label class="label">Pick-up</label><br>
+            
+
+        <div style="display: flex; justify-content: center; align-items: center; width:78%; margin-top: -23px;">
+            <div class="bg-white p-4 rounded-lg max-w-[300px]">
+                <div class="relative mt-1 max-w-xs text-black">
+                    <div class="absolute inset-y-0 left-3 my-auto h-9 flex items-center border-r pr-1">
+                        <select class="text-sm outline-none rounded-lg h-full border border-black">
+                            <option>Maa</option>
+                            <option>Agdao</option>
+                            <option>Matina</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <div style="display: flex; justify-content: center; align-items: center; margin-top: -27px;">
+                <img src="/gif/car.gif" alt="Car GIF" style="width: 200px;" />
+            </div>
+
+            <label style="margin-top: -25px;" class="label">Drop-off</label><br>
+
+        <div style="display: flex; justify-content: center; align-items: center; width:78%; margin-top: -23px;">
+            <div class="bg-white p-4 rounded-lg max-w-[300px] ">
+                <div class="relative mt-1 max-w-xs text-black ">
+                    <div class="absolute inset-y-0 left-3 my-auto h-9 flex items-center border-r pr-1">
+                        <select class="text-sm outline-none rounded-lg h-full border border-black">
+                            <option>Maa</option>
+                            <option>Agdao</option>
+                            <option>Matina</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+        </div>
+
+        <div class="flex items-center justify-center gap-4 mt-8">
+            <button class="bg-green-200 p-2 rounded text-black border border-black">Submit</button>
+            <button id="close-modal" class="text-black bg-red-200 p-2 rounded border border-black">Close</button>
+        </div>
+    </div>
+</div> -->
+
+<!-- 
+   document.getElementById('cards-container').addEventListener('click', async (event) => {
+    const card = event.target.closest('#docs-card');
+    if (card) {
+        const cardTitle = card.querySelector('h2').textContent;
+
+        try {
+            // Fetch car details from the server
+            const response = await fetch(`/api/cars?carName=${encodeURIComponent(cardTitle)}`);
+            if (!response.ok) throw new Error('Failed to fetch car details');
+            const car = await response.json();
+
+            if (!car) {
+                alert('Car not found in database!');
+                return;
+            }
+
+            // Debugging: Log the stock value
+            console.log(`Car Stock for ${car.carName}: ${car.carStock}`);
+
+            // Check if the car is out of stock
+            if (car.carStock === 0) {
+                alert(`${car.carName} is out of stock!`);
+                return; // Prevent the modal from opening
+            }
+
+            // Set car details in hidden input fields
+            document.getElementById('carID').value = car.carID;
+            document.getElementById('carName').value = car.carName;
+
+            // Show modal
+            document.getElementById('car-modal').classList.remove('hidden');
+        } catch (error) {
+            console.error('Error fetching car details:', error);
+        }
+    }
+});
+
+
+
+    const closeModalButton = document.getElementById('close-modal');
+    const carModal = document.getElementById('car-modal');
+
+    closeModalButton.addEventListener('click', () => {
+        carModal.classList.add('hidden'); // Hide the modal
+    }); -->

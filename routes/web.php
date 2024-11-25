@@ -1,5 +1,6 @@
 <?php
-
+use App\Models\Car;
+use Illuminate\Http\Request;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -20,6 +21,8 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\AddAdminController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\CarStocksController;
+use App\Http\Controllers\CarRentController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -69,6 +72,9 @@ Route::get('/ecars', function () {
 Route::get('/rentprocess', function () {
     return view('user.rentprocess');
 })->name('rentprocess');
+
+Route::post('/process-rent', [RentController::class, 'store'])->name('processRent');
+
 
 Route::get('/usercars/paymentprocess', function () {
     return view('user.usercars.paymentprocess');
@@ -193,4 +199,12 @@ Route::post('/add-car', [CarController::class, 'store'])->name('addcar');
 
 Route::get('/carstock', [CarStocksController::class, 'index']);
 
+// Route::post('/car-rent', [CarRentController::class, 'store'])->name('carRent.store');
+
+// Route::get('/api/cars', function (Request $request) {
+//     $carName = $request->query('carName');
+//     $car = Car::where('carName', $carName)->first();
+
+//     return response()->json($car);
+// });
 

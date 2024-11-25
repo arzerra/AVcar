@@ -43,45 +43,24 @@
                 {{ $slot }}
             </main>
         </div>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-                <script>
-            $(document).ready(function() {
-                // Initialize Flatpickr date picker
-                $('#datepicker').flatpickr({
-                    dateFormat: "Y-m-d",  // You can customize the date format
-                });
-            });
-        </script>
 
-        <script>
-    // Get the current date
-    const today = new Date();
-    
-    // Format it as yyyy-mm-dd
-    const formattedDate = today.toISOString().split('T')[0];
-
-    // Set the value of the input field to today's date
-    document.getElementById("todays-date").value = formattedDate;
-</script>
 
 <script>
-    // Get modal and buttons
+ 
     var modal = document.getElementById("modal");
     var openModalBtn = document.getElementById("openModalBtn");
     var closeModalBtn = document.getElementById("closeModalBtn");
 
-    // Open the modal
+
     openModalBtn.onclick = function() {
         modal.style.display = "block";
     }
 
-    // Close the modal when the user clicks on the "×"
     closeModalBtn.onclick = function() {
         modal.style.display = "none";
     }
 
-    // Close the modal if the user clicks anywhere outside the modal content
+
     window.onclick = function(event) {
         if (event.target == modal) {
             modal.style.display = "none";

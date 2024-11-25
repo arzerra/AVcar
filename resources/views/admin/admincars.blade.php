@@ -54,10 +54,9 @@
             </a>
 
             @if (session('success'))
-            <div class="alert alert-success bg-black text-green-500 p-3 rounded mb-4 flex justify-center items-center text-xl" style="width: fit-content; margin: auto;">
-                {{ session('success') }}
-            </div>
-
+                <div class="alert alert-success bg-black text-green-500 p-3 rounded mb-4 flex justify-center items-center text-xl" style="width: fit-content; margin: auto;">
+                    {{ session('success') }}
+                </div>
             @endif
 
             @if (session('error'))
@@ -66,44 +65,49 @@
                 </div>
             @endif
 
-          <form action="{{ route('addcar') }}" method="post" class="form">
-    @csrf
+            <form action="{{ route('addcar') }}" method="post" class="form">
+                @csrf
 
-    <!-- Custom Styled Dropdown -->
-    <div class="custom-dropdown-container">
-        <label for="carName" class="dropdown-label">SELECT A CAR</label>
-        <div class="custom-dropdown">
-            <select id="carName" name="carName" required onchange="updateRentalPrice()">
-                <option disabled>Economy</option>
-                <option value="Toyota Vios">Toyota Vios</option>
-                <option value="Mitsubishi Mirage">Mitsubishi Mirage</option>
-                <option value="Honda City">Honda City</option>
-                <option value="Suzuki Alto">Suzuki Alto</option>
-            </select>
-        </div>
-    </div>
+                <!-- Custom Styled Dropdown -->
+                <div class="custom-dropdown-container">
+                    <label for="carName" class="dropdown-label">SELECT A CAR</label>
+                    <div class="custom-dropdown">
+                        <select id="carName" name="carName" required onchange="updateRentalPrice()">
+                            <option disabled>Economy</option>
+                            <option value="Toyota Vios">Toyota Vios</option>
+                            <option value="Mitsubishi Mirage">Mitsubishi Mirage</option>
+                            <option value="Honda City">Honda City</option>
+                            <option value="Suzuki Alto">Suzuki Alto</option>
+                        </select>
+                    </div>
+                </div>
 
-    <!-- License Plate Input -->
-    <div class="form-group">
-        <label for="email">License Plate</label>
-        <input type="text" id="email" name="email" required=""/>
-    </div>
+                <!-- License Plate Input -->
+                <div class="form-group">
+                    <label for="carLicense">License Plate</label>
+                    <input type="text" id="carLicense" name="carLicense" required=""/>
 
-    <!-- Rental Price Input -->
-    <div class="form-group">
-        <label for="carPrice">Rental Price a Day</label>
-        <input type="text" id="carPrice" name="carPrice" required readonly>
-    </div>
+                    <!-- Display error message if license plate already exists -->
+                    @if ($errors->has('carLicense'))
+                        <div class="text-red-500 text-sm mt-2">
+                            {{ $errors->first('carLicense') }}
+                        </div>
+                    @endif
+                </div>
 
-    <!-- Submit Button -->
-    <div style="display: flex; justify-content: center;">
-        <button style="width: 35%;" type="submit" class="bg-black text-white border-2 border-gray-300 px-4 py-2 text-sm font-medium rounded-md hover:bg-gray-700 hover:border-gray-400 transition duration-300 ease-in-out">
-            Create
-        </button>
-    </div>
-</form>
+                <!-- Rental Price Input -->
+                <div class="form-group">
+                    <label for="carPrice">Rental Price a Day</label>
+                    <input type="text" id="carPrice" name="carPrice" required readonly>
+                </div>
 
-
+                <!-- Submit Button -->
+                <div style="display: flex; justify-content: center;">
+                    <button style="width: 35%;" type="submit" class="bg-black text-white border-2 border-gray-300 px-4 py-2 text-sm font-medium rounded-md hover:bg-gray-700 hover:border-gray-400 transition duration-300 ease-in-out">
+                        Create
+                    </button>
+                </div>
+            </form>
 
         </div>
     </div>
@@ -143,8 +147,4 @@ function updateRentalPrice() {
 window.onload = function() {
     updateRentalPrice();
 };
-
 </script>
-
-
-
