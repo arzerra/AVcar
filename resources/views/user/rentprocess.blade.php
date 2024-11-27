@@ -6,7 +6,7 @@
     </x-slot>
 
     <div class="max-w-3xl mx-auto sm:px-6 lg:px-8 py-6">
-        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+        <div class="bg-white dark:bg-zinc-900 overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 text-gray-900 dark:text-gray-100">
 
             <a href="javascript:history.back()">
@@ -40,14 +40,14 @@
                         <label for="rentDays" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                             Number of Rental Days
                         </label>
-                        <input type="number" name="rentDays" id="rentDays" class="mt-1 block w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm dark:bg-gray-900 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                        <input type="number" name="rentDays" id="rentDays" class="mt-1 block w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm dark:bg-zinc-900 focus:ring-white focus:border-white sm:text-sm" required>
                     </div>
 
                     <!-- Pick-up Location -->
                     <label for="pickup_location" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Pick-up Location</label>
                     <div class="mb-4">
-                        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg max-w-[300px]">
-                            <select name="pickup_location" id="pickup_location" class="text-sm outline-none rounded-lg h-full border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100">
+                        <div class="bg-white dark:bg-zinc-900 p-4 rounded-lg max-w-[300px]">
+                            <select name="pickup_location" id="pickup_location" class="text-sm outline-none rounded-lg h-full border border-white dark:border-gray-700 dark:bg-zinc-900 dark:text-gray-100">
                                 <option value="Maa">Maa</option>
                                 <option value="Agdao">Agdao</option>
                                 <option value="Matina">Matina</option>
@@ -58,8 +58,8 @@
                     <!-- Drop-off Location -->
                     <label for="dropoff_location" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Drop-off Location</label>
                     <div class="mb-4">
-                        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg max-w-[300px]">
-                            <select name="dropoff_location" id="dropoff_location" class="text-sm outline-none rounded-lg h-full border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100">
+                        <div class="bg-white dark:bg-zinc-900 p-4 rounded-lg max-w-[300px]">
+                            <select name="dropoff_location" id="dropoff_location" class="text-sm outline-none rounded-lg h-full border border-white dark:border-gray-700 dark:bg-zinc-900 dark:text-gray-100">
                                 <option value="Maa">Maa</option>
                                 <option value="Agdao">Agdao</option>
                                 <option value="Matina">Matina</option>

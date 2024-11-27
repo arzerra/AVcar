@@ -21,7 +21,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\AddAdminController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\CarStocksController;
-use App\Http\Controllers\CarRentController;
+use App\Http\Controllers\RentController;
 
 
 Route::get('/', function () {
@@ -82,59 +82,57 @@ Route::get('/usercars/paymentprocess', function () {
 
 
 
-// Admin Car Categories
+
+// Admin Routes Group
 Route::prefix('admin')->middleware(['auth', 'adminMiddleware'])->group(function () {
+    // Dashboard Route
+    // Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+
+    // Car Categories
     Route::get('/economy', function () {
         return view('admin.admincars.economy');
     })->name('admin.economy');
-
     Route::get('/compact', function () {
-    return view('admin.admincars.compact');
+        return view('admin.admincars.compact');
     })->name('admin.compact');
-
     Route::get('/fullsize', function () {
         return view('admin.admincars.fullsize');
     })->name('admin.fullsize');
-
     Route::get('/luxury', function () {
         return view('admin.admincars.luxury');
     })->name('admin.luxury');
-
     Route::get('/suv', function () {
         return view('admin.admincars.suv');
     })->name('admin.suv');
-
     Route::get('/van', function () {
         return view('admin.admincars.van');
     })->name('admin.van');
-
     Route::get('/sports', function () {
         return view('admin.admincars.sports');
     })->name('admin.sports');
-
     Route::get('/truck', function () {
         return view('admin.admincars.truck');
     })->name('admin.truck');
-
     Route::get('/ecars', function () {
         return view('admin.admincars.ecars');
     })->name('admin.ecars');
-
     Route::get('/test', function () {
         return view('admin.admincars.test');
     })->name('admin.test');
 
-
+    // Add Cars
     Route::get('/addcars', function () {
         return view('admin.addcars');
-    })->name('addcars');
+    })->name('admin.addcars');
 
-
-
-
-
+    // Rental Management
+Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::post('approve-rent/{id}', [AdminController::class, 'approveRent'])->name('admin.approveRent');
+    Route::post('decline-rent/{id}', [AdminController::class, 'declineRent'])->name('admin.declineRent');
 
 });
+
+
 
 
 Route::get('/dateform', [DateController::class, 'showForm'])->name('dateform');
@@ -199,12 +197,4 @@ Route::post('/add-car', [CarController::class, 'store'])->name('addcar');
 
 Route::get('/carstock', [CarStocksController::class, 'index']);
 
-// Route::post('/car-rent', [CarRentController::class, 'store'])->name('carRent.store');
-
-// Route::get('/api/cars', function (Request $request) {
-//     $carName = $request->query('carName');
-//     $car = Car::where('carName', $carName)->first();
-
-//     return response()->json($car);
-// });
-
+Route::post('/process-rent', [RentController::class, 'processRent'])->name('processRent');

@@ -34,4 +34,14 @@ class Car extends Model
             DB::table('carstocks')->where('carName', $car->carName)->decrement('carCount');
         });
     }
+
+    /**
+     * Get the rents associated with the car.
+     */
+    public function rents()
+    {
+        return $this->hasMany(Rent::class, 'carID', 'carID');
+    }
+
+    
 }
