@@ -18,8 +18,9 @@
                             <thead>
                                 <tr>
                                     <th class="border border-gray-400 dark:border-gray-700 px-4 py-2">Rent ID</th>
-                                    <th class="border border-gray-400 dark:border-gray-700 px-4 py-2">Car Name</th>
                                     <th class="border border-gray-400 dark:border-gray-700 px-4 py-2">User</th>
+                                    <th class="border border-gray-400 dark:border-gray-700 px-4 py-2">Car Name</th>
+                                    <th class="border border-gray-400 dark:border-gray-700 px-4 py-2">Price</th>
                                     <th class="border border-gray-400 dark:border-gray-700 px-4 py-2">Duration</th>
                                     <th class="border border-gray-400 dark:border-gray-700 px-4 py-2">Pickup</th>
                                     <th class="border border-gray-400 dark:border-gray-700 px-4 py-2">Dropoff</th>
@@ -32,15 +33,15 @@
                                 @foreach ($pendingRents as $rent)
                                     <tr>
                                         <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ $rent->rentID }}</td>
-                                        <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ $rent->carName }}</td>
                                         <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ $rent->user->name }}</td>
+                                        <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ $rent->carName }}</td>
+                                        <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ $rent->carPrice }}</td>
                                         <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ $rent->duration }} days</td>
                                         <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ $rent->pickup }}</td>
                                         <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ $rent->dropoff }}</td>
                                         <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">₱{{ number_format($rent->total, 2) }}</td>
                                         <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">
-                                            <!-- Format dateRequested using Carbon -->
-                                            {{ \Carbon\Carbon::parse($rent->dateRequested)->format('M d, Y h:i A') }}
+                                            {{ \Carbon\Carbon::parse($rent->dateRequested)->format('M d, Y') }}
                                         </td>
                                         <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">
                                             <div class="flex space-x-2">

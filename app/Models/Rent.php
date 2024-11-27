@@ -11,7 +11,7 @@ class Rent extends Model
 
     protected $primaryKey = 'rentID'; // Primary key column
     protected $fillable = [
-        'userID', 'carID', 'carName', 'duration', 'pickup', 'dropoff', 
+        'userID', 'carID', 'carName', 'carLicense', 'carPrice', 'duration', 'pickup', 'dropoff', 
         'total', 'rentStatus', 'dateRequested', 'rentDate', 'returnDate'
     ];
 
@@ -21,7 +21,6 @@ class Rent extends Model
     public function car()
     {
         return $this->belongsTo(Car::class, 'carID', 'carID');
-        
     }
 
     /**
@@ -31,5 +30,4 @@ class Rent extends Model
     {
         return $this->belongsTo(User::class, 'userID');
     }
-    
 }

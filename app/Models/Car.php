@@ -10,13 +10,19 @@ class Car extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'carID'; // Set primary key to 'carID'
+    public $incrementing = true; // Primary key is auto-incrementing
+    protected $keyType = 'int'; // Primary key type is integer
+
     protected $fillable = [
-        'carName', 'carType', 'carLicense', 'carPrice', 'carStatus', 'rentID',
+        'carName', 
+        'carType', 
+        'carLicense', 
+        'carPrice', 
+        'carStatus', 
+        'rentID',
     ];
 
-    /**
-     * Boot method to handle stock updates.
-     */
     protected static function boot()
     {
         parent::boot();
@@ -33,15 +39,25 @@ class Car extends Model
         static::deleted(function ($car) {
             DB::table('carstocks')->where('carName', $car->carName)->decrement('carCount');
         });
+
+        // Listen for updates to carStatus
+        static::updated(function ($car) {
+            if ($car->isDirty('carStatus')) {
+                // When the status changes to 'rented', decrement carCount
+                if ($car->carStatus === 'rented') {
+                    DB::table('carstocks')->where('carName', $car->carName)->decrement('carCount');
+                }
+
+                // When the status changes to 'available', increment carCount
+                if ($car->carStatus === 'available') {
+                    DB::table('carstocks')->where('carName', $car->carName)->increment('carCount');
+                }
+            }
+        });
     }
 
-    /**
-     * Get the rents associated with the car.
-     */
     public function rents()
     {
         return $this->hasMany(Rent::class, 'carID', 'carID');
     }
-
-    
 }
