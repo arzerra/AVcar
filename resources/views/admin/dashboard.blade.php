@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-3xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Rentals') }}
         </h2>
     </x-slot>
@@ -35,7 +35,7 @@
                                         <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ $rent->rentID }}</td>
                                         <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ $rent->user->name }}</td>
                                         <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ $rent->carName }}</td>
-                                        <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ $rent->carPrice }}</td>
+                                        <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ $rent->carPrice }}/day</td>
                                         <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ $rent->duration }} days</td>
                                         <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ $rent->pickup }}</td>
                                         <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ $rent->dropoff }}</td>
