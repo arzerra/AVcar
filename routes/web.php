@@ -135,9 +135,12 @@ Route::prefix('admin')->middleware(['auth', 'adminMiddleware'])->group(function 
 Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::post('approve-rent/{id}', [AdminController::class, 'approveRent'])->name('admin.approveRent');
     Route::post('decline-rent/{id}', [AdminController::class, 'declineRent'])->name('admin.declineRent');
+Route::get('/admin/inventory', [AdminController::class, 'index'])->name('admin.inventory');
+Route::delete('/admin/inventory/{car}', [InventoryController::class, 'destroy'])->name('admin.deleteCar');
+
+
 
 });
-
 
 
 

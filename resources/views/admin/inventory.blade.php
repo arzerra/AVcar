@@ -1,214 +1,136 @@
-<style>
-.toggle-container {
-  --knob-size: 1.75em;
-  display: flex;
-  justify-content: center;
-  position: relative;
-}
-
-.toggle-input {
-  position: absolute;
-  z-index: 2;
-  bottom: 132.5%;
-  border-radius: 50%;
-  transform: rotate(-25deg);
-  transform-origin: 50% 4.75em;
-  width: var(--knob-size);
-  height: var(--knob-size);
-  opacity: 0;
-  /* fix em sizing */
-  font: inherit;
-  transition: transform .24s cubic-bezier(.65, 1.35, .5, 1);
-  cursor: pointer;
-}
-
-.toggle-input:checked {
-  transform: rotate(25deg);
-}
-
-.toggle-handle-wrapper {
-  position: absolute;
-  z-index: 1;
-  bottom: -135%;
-  -webkit-mask-image: linear-gradient(to bottom, #000 62.125%, transparent 50%);
-  mask-image: linear-gradient(to bottom, #000 62.125%, transparent 50%);
-  width: 200%;
-  overflow: hidden;
-}
-
-.toggle-handle {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transform: rotate(-25deg);
-  transform-origin: bottom center;
-  transition: transform .24s cubic-bezier(.65, 1.35, .5, 1);
-}
-
-.toggle-input:checked + .toggle-handle-wrapper > .toggle-handle {
-  transform: rotate(25deg);
-}
-
-.toggle-handle-knob {
-  position: relative;
-  z-index: 1;
-  border-radius: 50%;
-  width: var(--knob-size);
-  height: var(--knob-size);
-  background-image: radial-gradient(farthest-corner at 70% 30%, #fedee2 4%, #d63534 12% 24%, #a81a1a 50% 65%, #d63534 75%);
-  transition: transform .24s cubic-bezier(.65, 1.35, .5, 1);
-}
-
-.toggle-input:checked + .toggle-handle-wrapper .toggle-handle-knob {
-  transform: rotate(-90deg);
-}
-
-/* toggle handle knob hover inner shadow */
-.toggle-handle-knob::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  border-radius: inherit;
-  width: 100%;
-  height: 100%;
-  box-shadow: inset 0 0 8px 2px rgb(255 255 255 / .4);
-  opacity: 0;
-  transition: opacity .2s;
-}
-
-@media (hover: hover) {
-  .toggle-input:hover + .toggle-handle-wrapper .toggle-handle-knob::after,
-  .toggle-input:focus-visible + .toggle-handle-wrapper .toggle-handle-knob::after {
-    opacity: 1;
-  }
-}
-
-.toggle-handle-bar-wrapper {
-  position: relative;
-  width: .5em;
-  height: 3em;
-}
-
-.toggle-handle-bar {
-  position: absolute;
-  top: calc(var(--knob-size) / 2 * -1);
-  left: 0;
-  width: 100%;
-  height: calc(100% + var(--knob-size) / 2);
-  background-image: linear-gradient(to right, #777475, #a4a4a4, #fff 45% 55%, #a4a4a4, #777475);
-  background-position-x: .06125em;
-  transition: background-position-x .24s cubic-bezier(.65, 1.35, .5, 1);
-  box-shadow: inset 0 1em .25em rgb(0 0 0 / .4);
-}
-
-.toggle-input:checked + .toggle-handle-wrapper .toggle-handle-bar {
-  background-position-x: -.06125em;
-}
-
-.toggle-base {
-  position: relative;
-  border-radius: 3.125em;
-  padding: .25em;
-  width: 3.5em;
-  height: 1.125em;
-  background-color: #fff;
-  background-image: linear-gradient(to bottom, #fff, #d7d7d7);
-  box-shadow: 0 -.25em .5em #fff, 0 .25em .5em #d7d7d7;
-}
-
-.toggle-base-inside {
-  position: relative;
-  border-radius: inherit;
-  width: 100%;
-  height: 100%;
-  background-image: linear-gradient(to bottom, #a6a6a6, #7d7d7d);
-  box-shadow: inset 0 .0625em rgb(255 255 255 / .2), inset 0 -.03125em rgb(255 255 255 / 1), inset 0 -.0625em .25em rgb(0 0 0 / .1);
-}
-
-/* toggle base inside active */
-.toggle-base-inside::after {
-  content: '';
-  position: absolute;
-  border-radius: inherit;
-  width: 100%;
-  height: 100%;
-  background-image: linear-gradient(to bottom, #5ab054, #438c3c);
-  box-shadow: inherit;
-  opacity: 0;
-  transition: opacity .24s cubic-bezier(.65, 1.35, .5, 1);
-}
-
-.toggle-input:checked ~ .toggle-base .toggle-base-inside::after {
-  opacity: 1;
-}
-</style>
-
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-4xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Car Inventory') }}
-        </h2>
-    </x-slot>
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
 
-    <div>
+                    <!-- Buttons for toggling tables -->
+                    <div class="flex mb-4 justify-center">
+                        <button id="inventoryBtn" class="toggle-button text-2xl font-bold py-2 px-4 rounded-l-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none">
+                            Inventory
+                        </button>
+                        <button id="stocksBtn" class="toggle-button text-2xl font-bold py-2 px-4 rounded-r-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none">
+                            Stocks
+                        </button>
+                    </div>
 
-        <div style="display: flex; justify-content: center; gap: 20px;">
-            <a href="{{ route('admin.economy') }}">
-                <button class="categorybutton active">Economy</button>
-            </a>
-            <a href="{{ route('admin.compact') }}">
-                <button class="categorybutton">Compact</button>
-            </a>
-            <a href="{{ route('admin.fullsize') }}">
-                <button class="categorybutton">Full-Size</button>
-            </a>
-            <a href="{{ route('admin.luxury') }}">
-                <button class="categorybutton">Luxury</button>
-            </a>
-            <a href="{{ route('admin.suv') }}">
-                <button class="categorybutton">SUV</button>
-            </a>
-            <a href="{{ route('admin.van') }}">
-                <button class="categorybutton">VAN</button>
-            </a>
-            <a href="{{ route('admin.sports') }}">
-                <button class="categorybutton">Sports</button>
-            </a>
-            <a href="{{ route('admin.truck') }}">
-                <button class="categorybutton">Truck</button>
-            </a>
-            <a href="{{ route('admin.ecars') }}">
-                <button class="categorybutton">E-Cars</button>
-            </a>
-        </div>
+                    <!-- Search Form -->
+                    <form method="GET" action="{{ route('admin.inventory') }}" class="mb-6" id="searchForm">
+                        <div class="flex items-center space-x-2">
+                            <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by car type, name, or license" class="text-black border border-gray-400 px-4 py-2 rounded">
+                            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500">Search</button>
 
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-8">
+                            <!-- Checkbox for Available filter -->
+                            <div class="flex items-center space-x-2 ml-4">
+                                <input type="checkbox" id="available" name="filter[available]" value="1" {{ request('filter.available') ? 'checked' : '' }} class="h-4 w-4 text-blue-600">
+                                <label for="available" class="text-black">Available</label>
+                            </div>
+                        </div>
+                    </form>
 
-        
-            
-            <div class="bg-white dark:bg-black overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-800 dark:text-gray-200 text-center text-3xl">
-                    {{ __("Economy") }}
+                    @if(request('search'))
+                        <p style="color: white; text-align: center; margin-bottom: 20px;">
+                            Showing results for: <strong>{{ request('search') }}</strong>
+                        </p>
+                    @endif
+
+                    <!-- Inventory Table -->
+                    <div id="inventoryTable" class="table-container">
+                        @if($cars->isEmpty())
+                            <p>No cars available in the inventory.</p>
+                        @else
+                            <table class="table-auto w-full text-left border-collapse border border-gray-400 dark:border-gray-700">
+                                <thead>
+                                    <tr>
+                                        <th class="border border-gray-400 dark:border-gray-700 px-4 py-2">Car Name</th>
+                                        <th class="border border-gray-400 dark:border-gray-700 px-4 py-2">Car License</th>
+                                        <th class="border border-gray-400 dark:border-gray-700 px-4 py-2">Car Type</th>
+                                        <th class="border border-gray-400 dark:border-gray-700 px-4 py-2">Car Price</th>
+                                        <th class="border border-gray-400 dark:border-gray-700 px-4 py-2">Car Status</th>
+                                        <th class="border border-gray-400 dark:border-gray-700 px-4 py-2 text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($cars as $car)
+                                        <tr>
+                                            <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ $car->carName }}</td>
+                                            <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ $car->carLicense }}</td>
+                                            <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ $car->carType }}</td>
+                                            <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ $car->carPrice }}</td>
+                                            <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ ucfirst($car->carStatus) }}</td>
+                                            <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">
+                                            <form action="{{ route('admin.deleteCar', $car) }}" method="POST" id="delete-form-{{ $car->id }}" onsubmit="return confirmDeletion(event, '{{ $car->carStatus }}', {{ $car->id }})">
+                                                @csrf
+                                                @method('DELETE')
+                                                <div class="flex justify-center">
+                                                    <button type="submit" class="bg-transparent text-red-500 border-2 border-gray-300 px-4 py-1 text-sm font-small rounded-md hover:bg-gray-700 hover:border-gray-400 transition duration-300 ease-in-out">
+                                                        x
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </td>
+
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @endif
+                    </div>
+
+                    <!-- Car Stocks Table -->
+                    <div id="stocksTable" class="table-container hidden">
+                        @if($carStocks->isEmpty())
+                            <p>No car stocks available.</p>
+                        @else
+                            <table class="table-auto w-full text-left border-collapse border border-gray-400 dark:border-gray-700">
+                                <thead>
+                                    <tr>
+                                        <th class="border border-gray-400 dark:border-gray-700 px-4 py-2">Car Name</th>
+                                        <th class="border border-gray-400 dark:border-gray-700 px-4 py-2">Available Stocks</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($carStocks as $stock)
+                                        <tr>
+                                            <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ $stock->carName }}</td>
+                                            <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ $stock->carCount }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @endif
+                    </div>
+
                 </div>
             </div>
-
-            <div class="py-12 form-container">
- 
-            <table border="1" style="border-color: white; color: white; width: 100%; text-align: left; border-collapse: collapse; margin: 0 auto;">
-                <tr>
-                    <td style="border: 1px solid white; padding: 8px;">Car Name</td>
-                    <td style="border: 1px solid white; padding: 8px;">Car Stocks</td>
-                </tr>
-
-                <tr>
-                    <td style="border: 1px solid white; padding: 8px;"></td>
-                    <td style="border: 1px solid white; padding: 8px;"></td>
-                </tr>
-
-            </table>
-                        
-            </div>
         </div>
+    </div>
 
+    <!-- JavaScript for toggling the tables and auto-submit on checkbox -->
+    <script>
+        document.getElementById("inventoryBtn").addEventListener("click", function() {
+            document.getElementById("inventoryTable").classList.remove("hidden");
+            document.getElementById("stocksTable").classList.add("hidden");
+        });
+
+        document.getElementById("stocksBtn").addEventListener("click", function() {
+            document.getElementById("stocksTable").classList.remove("hidden");
+            document.getElementById("inventoryTable").classList.add("hidden");
+        });
+
+        // Auto-submit the form when checkbox is toggled
+        document.getElementById("available").addEventListener("change", function() {
+            document.getElementById("searchForm").submit();
+        });
+            function confirmDeletion(event, status, carId) {
+        if (status === 'rented') {
+            // Prevent form submission if the car is rented
+            event.preventDefault();
+            alert('This car is currently rented and cannot be deleted.');
+        } else {
+            // Proceed with the deletion if the car is not rented
+            return confirm('Are you sure you want to delete this car?');
+        }
+    }
+    </script>
 </x-app-layout>
