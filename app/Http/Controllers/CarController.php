@@ -45,6 +45,10 @@ private function getCarType($carName)
         'Mitsubishi Mirage' => 'Economy',
         'Honda City' => 'Economy',
         'Suzuki Alto' => 'Economy',
+        'Suzuki Swift' => 'Compact',
+        'Hyundai Accent' => 'Compact',
+        'Kia Rio' => 'Compact',
+        'Nissan Almera' => 'Compact',
     ];
 
     return $carTypes[$carName] ?? 'unknown';

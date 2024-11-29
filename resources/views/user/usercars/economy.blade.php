@@ -71,48 +71,49 @@
                 </main>
             </div>
         </div>
+
     </div>
 
 
         <script>
-        document.addEventListener("DOMContentLoaded", () => {
-        const cards = [
-            { title: "Toyota Vios", 
-            imgSrc: "car1.png", 
-            seating: "Seating: 5 People", 
-            fueltype: "Fuel Type: Gasoline", 
-            tankcaps: "Tank Caps.: 42L", 
-            stocks: 0, 
-            trans: "Trans: Automatic", 
-            rental: "Rental: ₱750/Day" },
+document.addEventListener("DOMContentLoaded", () => {
+    const cards = [
+        { title: "Toyota Vios", 
+        imgSrc: "car1.png", 
+        seating: "Seating: 5 People", 
+        fueltype: "Fuel Type: Gasoline", 
+        tankcaps: "Tank Caps.: 42L", 
+        stocks: 0, 
+        trans: "Trans: Automatic", 
+        rental: "Rental: ₱750/Day" },
 
-            { title: "Mitsubishi Mirage", 
-            imgSrc: "car2.png", 
-            seating: "Seating: 5 People", 
-            fueltype: "Fuel Type: Gasoline", 
-            tankcaps: "Tank Caps.: 40L", 
-            stocks: 0, 
-            trans: "Trans: Manual", 
-            rental: "Rental: ₱600/Day" },
+        { title: "Mitsubishi Mirage", 
+        imgSrc: "car2.png", 
+        seating: "Seating: 5 People", 
+        fueltype: "Fuel Type: Gasoline", 
+        tankcaps: "Tank Caps.: 40L", 
+        stocks: 0, 
+        trans: "Trans: Manual", 
+        rental: "Rental: ₱600/Day" },
 
-            { title: "Honda City", 
-            imgSrc: "car3.png", 
-            seating: "Seating: 5 People", 
-            fueltype: "Fuel Type: Gasoline", 
-            tankcaps: "Tank Caps.: 42L", 
-            stocks: 0, 
-            trans: "Trans: Automatic", 
-            rental: "Rental: ₱800/Day" },
+        { title: "Honda City", 
+        imgSrc: "car3.png", 
+        seating: "Seating: 5 People", 
+        fueltype: "Fuel Type: Gasoline", 
+        tankcaps: "Tank Caps.: 42L", 
+        stocks: 0, 
+        trans: "Trans: Automatic", 
+        rental: "Rental: ₱800/Day" },
 
-            { title: "Suzuki Alto", 
-            imgSrc: "car4.png", 
-            seating: "Seating: 4 People", 
-            fueltype: "Fuel Type: Gasoline", 
-            tankcaps: "Tank Caps.: 35L", 
-            stocks: 0, 
-            trans: "Trans: Automatic", 
-            rental: "Rental: ₱450/Day" }
-        ];
+        { title: "Suzuki Alto", 
+        imgSrc: "car4.png", 
+        seating: "Seating: 4 People", 
+        fueltype: "Fuel Type: Gasoline", 
+        tankcaps: "Tank Caps.: 35L", 
+        stocks: 0, 
+        trans: "Trans: Automatic", 
+        rental: "Rental: ₱450/Day" }
+    ];
 
     let currentPage = 1;
     const cardsPerPage = 3;
@@ -127,6 +128,7 @@
 
         cardsToDisplay.forEach(card => {
             const cardHTML = `
+            <a href="javascript:void(0)" class="block" data-car="${card.title}">
                 <div id="docs-card" class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] md:row-span-3 lg:p-10 lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]">
                     <div id="screenshot-container" class="relative flex w-full flex-5 items-stretch">
                         <img src="{{ asset('images/car-pic-categories/economy/${card.imgSrc}') }}" width="500" alt="AV Logo" />
@@ -151,13 +153,29 @@
                         </div>
                     </div>
                 </div>
+            </a>
             `;
+
             cardsContainer.innerHTML += cardHTML;
         });
 
         document.getElementById('prev-btn').disabled = page === 1;
         document.getElementById('next-btn').disabled = page * cardsPerPage >= cards.length;
     }
+
+    document.getElementById('prev-btn').addEventListener('click', () => {
+        if (currentPage > 1) {
+            currentPage--;
+            renderCards(currentPage);
+        }
+    });
+
+    document.getElementById('next-btn').addEventListener('click', () => {
+        if (currentPage * cardsPerPage < cards.length) {
+            currentPage++;
+            renderCards(currentPage);
+        }
+    });
 
     fetch('/carstock')
         .then(response => {
@@ -180,28 +198,26 @@
         })
         .catch(error => console.error('Error fetching car stocks:', error));
 
+    document.getElementById('cards-container').addEventListener('click', (event) => {
+        const card = event.target.closest('#docs-card');
+        if (card) {
+            const cardTitle = card.querySelector('h2').textContent; // Get car title
+            const clickedCard = cards.find(item => item.title === cardTitle); // Find the clicked card
 
-
-
-    document.getElementById('prev-btn').addEventListener('click', () => {
-        if (currentPage > 1) {
-            currentPage--;
-            renderCards(currentPage);
+            // Check if the car is out of stock
+            if (clickedCard.stocks <= 0) {
+                // Show alert if out of stock
+                alert(`${clickedCard.title} is out of stock!`);
+                event.preventDefault(); // Prevent the redirection
+            } else {
+                // Redirect to rentprocess route with the carName in query params
+                window.location.href = `/rentprocess?carName=${encodeURIComponent(cardTitle)}`;
+            }
         }
     });
-
-    document.getElementById('next-btn').addEventListener('click', () => {
-        if (currentPage * cardsPerPage < cards.length) {
-            currentPage++;
-            renderCards(currentPage);
-        }
-    });
-
-
 
     renderCards(currentPage);
 });
-
 
     </script>
     

@@ -78,6 +78,11 @@
                             <option value="Mitsubishi Mirage">Mitsubishi Mirage</option>
                             <option value="Honda City">Honda City</option>
                             <option value="Suzuki Alto">Suzuki Alto</option>
+                            <option disabled>Compact</option>
+                            <option value="Suzuki Swift">Suzuki Swift</option>
+                            <option value="Hyundai Accent">Hyundai Accent</option>
+                            <option value="Kia Rio">Kia Rio</option>
+                            <option value="Nissan Almera">Nissan Almera</option>
                         </select>
                     </div>
                 </div>
@@ -135,8 +140,20 @@ function updateRentalPrice() {
         case 'Suzuki Alto':
             price = '₱450/Day';
             break;
+        case 'Suzuki Swift':
+            price = '₱500/Day';
+            break;
+        case 'Hyundai Accent':
+            price = '₱600/Day';
+            break;
+        case 'Kia Rio':
+            price = '₱650/Day';
+            break;
+        case 'Nissan Almera':
+            price = '₱700/Day';
+            break;
         default:
-            price = '₱750/Day'; // Default to Toyota Vios
+            price = '₱750/Day';
     }
     
     // Update rental price input value

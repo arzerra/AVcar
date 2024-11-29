@@ -1,18 +1,24 @@
 <x-app-layout>
+        <x-slot name="header">
+        <h2 class="font-semibold text-4xl text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('Car Inventory') }}
+        </h2>
+    </x-slot>
     <div class="py-12">
+                            <!-- Buttons for toggling tables -->
+                    <div class="flex mb-4 justify-center">
+                        <button id="inventoryBtn" class="toggle-button text-white text-2xl font-bold py-2 px-4 rounded-l-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none">
+                            Inventory
+                        </button>
+                        <button id="stocksBtn" class="toggle-button text-white text-2xl font-bold py-2 px-4 rounded-r-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none">
+                            Stocks
+                        </button>
+                    </div>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
-                    <!-- Buttons for toggling tables -->
-                    <div class="flex mb-4 justify-center">
-                        <button id="inventoryBtn" class="toggle-button text-2xl font-bold py-2 px-4 rounded-l-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none">
-                            Inventory
-                        </button>
-                        <button id="stocksBtn" class="toggle-button text-2xl font-bold py-2 px-4 rounded-r-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none">
-                            Stocks
-                        </button>
-                    </div>
+
 
                     <!-- Search Form -->
                     <form method="GET" action="{{ route('admin.inventory') }}" class="mb-6" id="searchForm">
@@ -23,7 +29,7 @@
                             <!-- Checkbox for Available filter -->
                             <div class="flex items-center space-x-2 ml-4">
                                 <input type="checkbox" id="available" name="filter[available]" value="1" {{ request('filter.available') ? 'checked' : '' }} class="h-4 w-4 text-blue-600">
-                                <label for="available" class="text-black">Available</label>
+                                <label for="available" class="text-white">Available</label>
                             </div>
                         </div>
                     </form>
@@ -47,7 +53,7 @@
                                         <th class="border border-gray-400 dark:border-gray-700 px-4 py-2">Car Type</th>
                                         <th class="border border-gray-400 dark:border-gray-700 px-4 py-2">Car Price</th>
                                         <th class="border border-gray-400 dark:border-gray-700 px-4 py-2">Car Status</th>
-                                        <th class="border border-gray-400 dark:border-gray-700 px-4 py-2 text-center">Actions</th>
+                                        <th class="border border-gray-400 dark:border-gray-700 px-4 py-2 text-center">Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>

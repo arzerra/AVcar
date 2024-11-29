@@ -75,16 +75,12 @@ Route::get('/rentprocess', function () {
 
 Route::post('/process-rent', [RentController::class, 'store'])->name('processRent');
 
-
-Route::get('/usercars/paymentprocess', function () {
-    return view('user.usercars.paymentprocess');
-})->name('user.paymentprocess');
-
 Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard');
 Route::post('/dashboard/rentals/{id}/cancel', [UserController::class, 'cancelRental'])->name('dashboard.cancelRental');
 
 Route::post('/dashboard/cancel/{id}', [UserController::class, 'cancelRental'])->name('dashboard.cancelRental');
 Route::delete('/dashboard/delete/{id}', [UserController::class, 'deleteRental'])->name('dashboard.deleteRental');
+Route::get('/rental-history', [RentalHistoryController::class, 'index'])->name('rental.history');
 
 
 

@@ -9,48 +9,51 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    // Admin dashboard and view pending rental requests
+    // Admin dashboard and view rental requests
     public function index()
     {
-        // Fetch pending rentals with rentStatus = 'pending'
+
+$rentalHistory = Rent::all(); 
         $pendingRents = Rent::where('rentStatus', 'pending')->get();
 
-        // Return to view with the pending rents
-        return view('admin.dashboard', compact('pendingRents'));
+
+        // Return to view with both pending rents and rental history
+        return view('admin.dashboard', compact('pendingRents', 'rentalHistory'));
     }
 
-   public function approveRent($id)
-{
-    // Find the rent record
-    $rent = Rent::findOrFail($id);
+    // Approve a rental request
+    public function approveRent($id)
+    {
+        // Find the rent record
+        $rent = Rent::findOrFail($id);
 
-    // Find the next available car (this will assign a new car even if carName is the same)
-    $availableCar = Car::where('carStatus', 'available')
-                        ->where('carName', $rent->carName)  // Ensuring it's the same car name
-                        ->first(); // Get the first available car with the same car name
+        // Find the next available car (this will assign a new car even if carName is the same)
+        $availableCar = Car::where('carStatus', 'available')
+            ->where('carName', $rent->carName)  // Ensuring it's the same car name
+            ->first(); // Get the first available car with the same car name
 
-    if (!$availableCar) {
-        // Redirect back with error if no car is available
-        return redirect()->back()->with('error', 'No available cars to assign.');
+        if (!$availableCar) {
+            // Redirect back with error if no car is available
+            return redirect()->back()->with('error', 'No available cars to assign.');
+        }
+
+        // Assign the car to the rent
+        $rent->carID = $availableCar->carID;  // Assign new car's ID
+        $rent->carName = $availableCar->carName;  // Assign the car name
+        $rent->carLicense = $availableCar->carLicense;  // Assign the car license
+        $rent->carPrice = $availableCar->carPrice;  // Assign the car price
+        $rent->rentStatus = 'rented';  // Set status to 'rented'
+        $rent->rentDate = now();
+        $rent->returnDate = now()->addDays($rent->duration);
+        $rent->save();
+
+        // Update the car's status to rented
+        $availableCar->carStatus = 'rented';
+        $availableCar->rentID = $rent->rentID;  // Link the car to this rent
+        $availableCar->save();
+
+        return redirect()->back()->with('success', 'Rent request approved, and car assigned.');
     }
-
-    // Assign the car to the rent
-    $rent->carID = $availableCar->carID;  // Assign new car's ID
-    $rent->carName = $availableCar->carName;  // Assign the car name
-    $rent->carLicense = $availableCar->carLicense;  // Assign the car license
-    $rent->carPrice = $availableCar->carPrice;  // Assign the car price
-    $rent->rentStatus = 'rented';  // Set status to 'rented'
-    $rent->rentDate = now();
-    $rent->returnDate = now()->addDays($rent->duration);
-    $rent->save();
-
-    // Update the car's status to rented
-    $availableCar->carStatus = 'rented';
-    $availableCar->rentID = $rent->rentID;  // Link the car to this rent
-    $availableCar->save();
-
-    return redirect()->back()->with('success', 'Rent request approved, and car assigned.');
-}
 
     // Decline a rental request
     public function declineRent($id)
