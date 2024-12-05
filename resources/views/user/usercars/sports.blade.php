@@ -37,12 +37,11 @@
             </a>
         </div>
 
-    
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-8">
             
             <div class="bg-white dark:bg-black overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-800 dark:text-gray-200 text-center text-3xl">
-                    {{ __("Sports") }}
+                    {{ __("Compact") }}
                 </div>
             </div>
             
@@ -72,67 +71,176 @@
                 </main>
             </div>
         </div>
+
     </div>
 
+
         <script>
-        const cards = [
-            { title: "Economy", imgSrc: "car1.png", description: "The Economy category is ideal for budget-conscious renters who prioritize fuel efficiency and affordability." },
-            { title: "Compact", imgSrc: "car2.png", description: "The Compact category offers affordable and practical vehicles with comfortable interiors, excellent fuel economy." },
-            { title: "Full-Size", imgSrc: "car3.png", description: "Full-size cars are popular for business travelers and longer trips, offering luxurious features and comfortable interiors." },
-            { title: "Luxury", imgSrc: "car4.png", description: "Luxury vehicles offer unparalleled luxury and performance, ideal for executives, VIPs, and anyone who wants to travel in style." },
-        ];
+document.addEventListener("DOMContentLoaded", () => {
+    const cards = [
+        { title: "Mazda MX-5 Miata", 
+        imgSrc: "car1.png", 
+        seating: "Seating: 2 People", 
+        fueltype: "Fuel Type: Gasoline", 
+        tankcaps: "Tank Caps.: 45L", 
+        stocks: 0, 
+        trans: "Trans: Automatic", 
+        rental: "Rental: ₱3500/Day" },
 
-        let currentPage = 1;
-        const cardsPerPage = 3;
+        { title: "Ford Mustang GT", 
+        imgSrc: "car2.png", 
+        seating: "Seating: 4 People", 
+        fueltype: "Fuel Type: Gasoline", 
+        tankcaps: "Tank Caps.:60L", 
+        stocks: 0, 
+        trans: "Trans: Manual", 
+        rental: "Rental: ₱5000/Day" },
+ 
+        { title: "Toyota 86", 
+        imgSrc: "car3.png", 
+        seating: "Seating: 4 People", 
+        fueltype: "Fuel Type: Gasoline", 
+        tankcaps: "Tank Caps.: 50L", 
+        stocks: 0, 
+        trans: "Trans: Manual", 
+        rental: "Rental: ₱3200/Day" },
 
-        function renderCards(page) {
-            const start = (page - 1) * cardsPerPage;
-            const end = page * cardsPerPage;
-            const cardsToDisplay = cards.slice(start, end);
+        { title: "Subaru BRZ", 
+        imgSrc: "car4.png", 
+        seating: "Seating: 4 People", 
+        fueltype: "Fuel Type: Gasoline", 
+        tankcaps: "Tank Caps.: 65L", 
+        stocks: 0, 
+        trans: "Trans: Automatic", 
+        rental: "Rental: ₱2750/Day" }
+    ];
 
-            const cardsContainer = document.getElementById('cards-container');
-            cardsContainer.innerHTML = '';
+    let currentPage = 1;
+    const cardsPerPage = 3;
 
-            cardsToDisplay.forEach(card => {
-                const cardHTML = `
-                    <a href="{{ route('rentprocess') }}" id="docs-card" class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] md:row-span-3 lg:p-10 lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]">
-                        <div id="screenshot-container" class="relative flex w-full flex-5 items-stretch">
-                            <img src="{{ asset('images/car-pic-categories/sport/${card.imgSrc}') }}" width="500" alt="AV Logo" />
-                        </div>
-                        <div class="relative flex items-center gap-6 lg:items-end">
-                            <div id="docs-card-content" class="flex items-start gap-6 lg:flex-col">
-                                <div class="pt-3 sm:pt-5 lg:pt-0">
-                                    <h2 class="text-xl font-semibold text-white dark:text-white">${card.title}</h2>
-                                    <p class="mt-4 text-sm/relaxed text-white dark:text-white">${card.description}</p>
+    function renderCards(page) {
+        const start = (page - 1) * cardsPerPage;
+        const end = page * cardsPerPage;
+        const cardsToDisplay = cards.slice(start, end);
+
+        const cardsContainer = document.getElementById('cards-container');
+        cardsContainer.innerHTML = '';
+
+        cardsToDisplay.forEach(card => {
+            const cardHTML = `
+            <a href="javascript:void(0)" class="block" data-car="${card.title}">
+                <div id="docs-card" class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] md:row-span-3 lg:p-10 lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]">
+                    <div id="screenshot-container" class="relative flex w-full flex-5 items-stretch">
+                        <img src="{{ asset('images/car-pic-categories/sport/${card.imgSrc}') }}" width="500" alt="AV Logo" />
+                    </div>
+                    <div class="relative flex items-center gap-6 lg:items-end">
+                        <div id="docs-card-content" class="flex items-start gap-6 lg:flex-col">
+                            <div class="pt-3 sm:pt-5 lg:pt-0">
+                                <h2 class="text-xl font-semibold text-white dark:text-white">${card.title}</h2>
+                                <div class="mt-3 text-sm/relaxed text-white dark:text-white grid grid-cols-2 gap-x-4">
+                                    <p>
+                                        <b>${card.seating}</b><br>
+                                        <b>${card.tankcaps}</b><br>
+                                        <b>${card.trans}</b>
+                                    </p>
+                                    <p>
+                                        <b>${card.fueltype}</b><br>
+                                        <b>${card.stocks > 0 ? `Stocks: ${card.stocks}` : "Out of Stock "}</b><br>
+                                        <b>${card.rental}</b>
+                                    </p>
                                 </div>
                             </div>
-                            <svg class="size-6 shrink-0 stroke-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"/>
-                            </svg>
                         </div>
-                    </a>
-                `;
-                cardsContainer.innerHTML += cardHTML;
+                    </div>
+                </div>
+            </a>
+            `;
+
+            cardsContainer.innerHTML += cardHTML;
+        });
+
+        document.getElementById('prev-btn').disabled = page === 1;
+        document.getElementById('next-btn').disabled = page * cardsPerPage >= cards.length;
+    }
+
+    document.getElementById('prev-btn').addEventListener('click', () => {
+        if (currentPage > 1) {
+            currentPage--;
+            renderCards(currentPage);
+        }
+    });
+
+    document.getElementById('next-btn').addEventListener('click', () => {
+        if (currentPage * cardsPerPage < cards.length) {
+            currentPage++;
+            renderCards(currentPage);
+        }
+    });
+
+    fetch('/carstock')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch car stocks');
+            }
+            return response.json();
+        })
+        .then(data => {
+            cards.forEach(card => {
+                const stock = data.find(item => item.carName === card.title);
+                if (stock) {
+                    card.stocks = stock.carCount;
+                } else {
+                    card.stocks = 0;
+                }
             });
 
-            document.getElementById('prev-btn').disabled = page === 1;
-            document.getElementById('next-btn').disabled = page * cardsPerPage >= cards.length;
+            renderCards(currentPage);
+        })
+        .catch(error => console.error('Error fetching car stocks:', error));
+
+    document.getElementById('cards-container').addEventListener('click', (event) => {
+        const card = event.target.closest('#docs-card');
+        if (card) {
+            const cardTitle = card.querySelector('h2').textContent; // Get car title
+            const clickedCard = cards.find(item => item.title === cardTitle); // Find the clicked card
+
+            // Check if the car is out of stock
+            if (clickedCard.stocks <= 0) {
+                // Show alert if out of stock
+                alert(`${clickedCard.title} is out of stock!`);
+                event.preventDefault(); // Prevent the redirection
+            } else {
+                // Redirect to rentprocess route with the carName in query params
+                window.location.href = `/rentprocess?carName=${encodeURIComponent(cardTitle)}`;
+            }
         }
+    });
 
-        document.getElementById('prev-btn').addEventListener('click', () => {
-            if (currentPage > 1) {
-                currentPage--;
-                renderCards(currentPage);
-            }
-        });
+    renderCards(currentPage);
+});
 
-        document.getElementById('next-btn').addEventListener('click', () => {
-            if (currentPage * cardsPerPage < cards.length) {
-                currentPage++;
-                renderCards(currentPage);
-            }
-        });
-
-        renderCards(currentPage);
     </script>
+    
+    <script src="{{ asset('js/your-script.js') }}"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+                <script>
+            $(document).ready(function() {
+
+                $('#datepicker').flatpickr({
+                    dateFormat: "Y-m-d",  
+                });
+            });
+        </script>
+
+        <script>
+
+    const today = new Date();
+    
+    const formattedDate = today.toISOString().split('T')[0];
+
+    document.getElementById("todays-date").value = formattedDate;
+</script>
+
 </x-app-layout>

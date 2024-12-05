@@ -40,16 +40,62 @@ public function store(Request $request)
 // Helper function to map carName to carType
 private function getCarType($carName)
 {
-    $carTypes = [
-        'Toyota Vios' => 'Economy',
-        'Mitsubishi Mirage' => 'Economy',
-        'Honda City' => 'Economy',
-        'Suzuki Alto' => 'Economy',
-        'Suzuki Swift' => 'Compact',
-        'Hyundai Accent' => 'Compact',
-        'Kia Rio' => 'Compact',
-        'Nissan Almera' => 'Compact',
-    ];
+        $carTypes = [
+            // Economy
+            'Toyota Vios' => 'Economy',
+            'Mitsubishi Mirage' => 'Economy',
+            'Honda City' => 'Economy',
+            'Suzuki Alto' => 'Economy',
+
+            // Compact
+            'Suzuki Swift' => 'Compact',
+            'Hyundai Accent' => 'Compact',
+            'Kia Rio' => 'Compact',
+            'Nissan Almera' => 'Compact',
+
+            // Fullsize
+            'Toyota Camry' => 'Fullsize',
+            'Honda Accord' => 'Fullsize',
+            'Hyundai Sonata' => 'Fullsize',
+            'Kia Optima' => 'Fullsize',
+
+            // Luxury
+            'BMW 3-Series' => 'Luxury',
+            'Mercedes-Benz C-Class' => 'Luxury',
+            'Audi A4' => 'Luxury',
+            'Jaguar XJ' => 'Luxury',
+
+            // SUVs
+            'Toyota Fortuner' => 'SUVs',
+            'Mitsubishi Montero Sport' => 'SUVs',
+            'Ford Everest' => 'SUVs',
+            'Nissan Terra' => 'SUVs',
+
+            // Vans
+            'Mitsubishi L300' => 'Vans',
+            'Toyota Hiace Commuter' => 'Vans',
+            'Hyundai Starex 2007' => 'Vans',
+            'Kia Grand Carnival' => 'Vans',
+
+            // Sports
+            'Mazda MX-5 Miata' => 'Sports',
+            'Ford Mustang GT' => 'Sports',
+            'Toyota 86' => 'Sports',
+            'Subaru BRZ' => 'Sports',
+
+            // Trucks
+            'Isuzu N-Series NHR' => 'Trucks',
+            'Mitsubishi Fuso Canter' => 'Trucks',
+            'Hyundai H-100' => 'Trucks',
+            'Foton Tornado' => 'Trucks',
+
+            // E-Cars
+            'Luxeed S7' => 'E-Cars',
+            'JiYue ROBO-02' => 'E-Cars',
+            'BMW i4' => 'E-Cars',
+            'BYD Seal U' => 'E-Cars'
+        ];
+
 
     return $carTypes[$carName] ?? 'unknown';
 }
