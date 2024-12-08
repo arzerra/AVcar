@@ -7,7 +7,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-transparent border border-gray-400 dark:border-gray-700 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <h3 class="text-2xl font-bold mb-4">Your Rentals</h3>
                     
@@ -20,8 +20,9 @@
                                     <th class="border border-gray-400 dark:border-gray-700 px-4 py-2">Rent ID</th>
                                     <th class="border border-gray-400 dark:border-gray-700 px-4 py-2">Car Name</th>
                                     <th class="border border-gray-400 dark:border-gray-700 px-4 py-2">Price</th>
-                                    <th class="border border-gray-400 dark:border-gray-700 px-4 py-2">Date Request</th>
+                                    <th class="border border-gray-400 dark:border-gray-700 px-4 py-2">Date of Request</th>
                                     <th class="border border-gray-400 dark:border-gray-700 px-4 py-2">Duration</th>
+                                    <th class="border border-gray-400 dark:border-gray-700 px-4 py-2">Date of Return</th>
                                     <th class="border border-gray-400 dark:border-gray-700 px-4 py-2">Total</th>
                                     <th class="border border-gray-400 dark:border-gray-700 px-4 py-2">Pickup</th>
                                     <th class="border border-gray-400 dark:border-gray-700 px-4 py-2">Dropoff</th>
@@ -38,36 +39,31 @@
                                             <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ $rent->carPrice }}/day</td>
                                             <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ \Carbon\Carbon::parse($rent->dateRequested)->format('M d, Y') }}</td>
                                             <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ $rent->duration }} days</td>
+                                            <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ \Carbon\Carbon::parse($rent->returnDate)->format('M d, Y') }}</td>
                                             <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">₱{{ $rent->total }}</td>
                                             <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ $rent->pickup }}</td>
                                             <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ $rent->dropoff }}</td>
                                             <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ ucfirst($rent->rentStatus) }}</td>
                                             <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">
                                                 <div class="flex space-x-2">
-                                                    @if ($rent->rentStatus === 'pending' || ($rent->rentStatus === 'rented' && \Carbon\Carbon::parse($rent->rentDate)->diffInHours(now()) <= 24))
-                                                        <form action="{{ route('dashboard.cancelRental', $rent->rentID) }}" method="POST" onsubmit="return confirm('Are you sure you want to cancel this rental?');">
-                                                            @csrf
-                                                            <button type="submit" class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-500">
-                                                                Cancel
-                                                            </button>
-                                                        </form>
-                                                    @endif
-                                                    
-                                                    <!-- Only show delete button if the rental status is not "rented" -->
-                                                    @if ($rent->rentStatus !== 'rented')
-                                                        <form action="{{ route('dashboard.deleteRental', $rent->rentID) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this record?');">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="bg-gray-600 text-white px-3 py-1 rounded hover:bg-gray-500">
-                                                                Delete
-                                                            </button>
-                                                        </form>
-                                                    @else
-                                                        <!-- Optionally disable the delete button -->
-                                                        <button type="button" class="bg-gray-600 text-white px-3 py-1 rounded hover:bg-gray-500 cursor-not-allowed" disabled >
-                                                            Delete
-                                                        </button>
-                                                    @endif
+<!-- Always display the cancel button -->
+<form action="{{ route('dashboard.cancelRental', $rent->rentID) }}" method="POST" 
+      onsubmit="return confirm('Are you sure you want to cancel this rental?');">
+    @csrf
+
+    <!-- Allow cancellation only if the status is 'pending' or 'rented' within 24 hours -->
+    @if ($rent->rentStatus === 'pending' || ($rent->rentStatus === 'rented' && \Carbon\Carbon::parse($rent->dateRequested)->diffInHours(now()) <= 24))
+        <button type="submit" class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-500">
+            Cancel
+        </button>
+    @else
+        <!-- Disable cancel button if more than 24 hours have passed -->
+        <button type="button" class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-500 cursor-not-allowed" disabled>
+            Cancel
+        </button>
+    @endif
+</form>
+
                                                 </div>
                                             </td>
                                         </tr>

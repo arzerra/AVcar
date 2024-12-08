@@ -201,16 +201,13 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('cards-container').addEventListener('click', (event) => {
         const card = event.target.closest('#docs-card');
         if (card) {
-            const cardTitle = card.querySelector('h2').textContent; // Get car title
-            const clickedCard = cards.find(item => item.title === cardTitle); // Find the clicked card
+            const cardTitle = card.querySelector('h2').textContent; 
+            const clickedCard = cards.find(item => item.title === cardTitle); 
 
-            // Check if the car is out of stock
             if (clickedCard.stocks <= 0) {
-                // Show alert if out of stock
                 alert(`${clickedCard.title} is out of stock!`);
-                event.preventDefault(); // Prevent the redirection
+                event.preventDefault(); 
             } else {
-                // Redirect to rentprocess route with the carName in query params
                 window.location.href = `/rentprocess?carName=${encodeURIComponent(cardTitle)}`;
             }
         }

@@ -4,19 +4,19 @@
             {{ __('Rentals') }}
         </h2>
     </x-slot>
-    <div class="py-12 ">
+    <div class="py-3">
         
                     <!-- Toggle Buttons -->
                     <div class="flex mb-4 justify-center ">
-                        <button id="requestBtn" class="toggle-button text-white text-2xl font-bold py-2 px-4 rounded-l-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none">
+                        <button id="requestBtn" class="toggle-button text-white text-2xl font-bold py-2 px-4 rounded-l-lg bbg-transparent border border-gray-400 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none">
                             Request
                         </button>
-                        <button id="historyBtn" class="toggle-button text-white text-2xl font-bold py-2 px-4 rounded-r-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none">
+                        <button id="historyBtn" class="toggle-button text-white text-2xl font-bold py-2 px-4 rounded-r-lg bg-transparent border border-gray-400 dark:border-gray-700 dark:hover:bg-gray-600 focus:outline-none">
                             History
                         </button>
                     </div>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-transparent border border-gray-400 dark:border-gray-700 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
 
@@ -119,9 +119,16 @@
                                             <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">
                                                 {{ \Carbon\Carbon::parse($rent->returnDate)->format('M d, Y') }}
                                             </td>
-                                            <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">
-                                                {{ ucfirst($rent->rentStatus) }} <!-- Display Rent Status -->
-                                            </td>
+                                                                                    <td class="border border-gray-400 dark:border-gray-700 px-4 py-2
+                                            @if($rent->rentStatus == 'rented')
+                                                text-green-500
+                                            @elseif($rent->rentStatus == 'cancelled')
+                                                text-yellow-500
+                                            @elseif($rent->rentStatus == 'declined')
+                                                text-red-500
+                                            @endif">
+                                            {{ ucfirst($rent->rentStatus) }}
+                                        </td>
                                         </tr>
                                         @endforeach
                                 </tbody>

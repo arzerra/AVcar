@@ -1,18 +1,15 @@
 <x-app-layout>
-        <x-slot name="header">
+    <x-slot name="header">
         <h2 class="font-semibold text-4xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Rent Sales') }}
         </h2>
     </x-slot>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    
-
-
-                    <form method="GET" action="{{ route('admin.sales') }}">
-                        <!-- Filters in one row -->
+            <div class="bg-transparent border border-gray-400 dark:border-gray-700 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 dark:text-gray-100 ">
+                    <!-- Filter form -->
+                    <form class="ml-40" method="GET" action="{{ route('admin.sales') }}">
                         <div class="flex space-x-4 items-center mb-4">
                             <!-- Month filter -->
                             <div class="flex items-center">
@@ -51,9 +48,7 @@
                         </div>
                     </form>
 
-
-
-
+                    <!-- Displaying Rent Data -->
                     @if($rents->isEmpty())
                         <p>No rental records found.</p>
                     @else
@@ -80,10 +75,22 @@
                             </tbody>
                         </table>
 
-                        <div class="mt-4 text-xl font-semibold">
-                            <p>Total Sales: ₱{{ number_format($totalSales, 2) }}</p>
+                        <div class="mt-4 flex justify-between items-center font-semibold">
+                            <p class="text-xl">Total Sales: ₱{{ number_format($totalSales, 2) }}</p>
+
+                            <form action="{{ route('admin.sales.download') }}" method="GET" >
+                                <input type="hidden" name="month" value="{{ request('month') }}">
+                                <input type="hidden" name="year" value="{{ request('year') }}">
+                                <input type="hidden" name="date" value="{{ request('date') }}">
+                                
+                                <button type="submit" class="border border-gray-400 dark:border-gray-700 bg-transparent text-white px-4 py-2 text-1xl rounded hover:bg-gray-500">
+                                    Download Sales
+                                </button>
+                            </form>
                         </div>
+
                     @endif
+                    
                 </div>
             </div>
         </div>

@@ -77,10 +77,11 @@ Route::post('/process-rent', [RentController::class, 'store'])->name('processRen
 
 Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard');
 Route::post('/dashboard/rentals/{id}/cancel', [UserController::class, 'cancelRental'])->name('dashboard.cancelRental');
-
 Route::post('/dashboard/cancel/{id}', [UserController::class, 'cancelRental'])->name('dashboard.cancelRental');
-Route::delete('/dashboard/delete/{id}', [UserController::class, 'deleteRental'])->name('dashboard.deleteRental');
+Route::delete('renthistory/delete/{id}', [RentalHistoryController::class, 'deleteRental'])->name('user.renthistory.deleteRental');
 Route::get('/rental-history', [RentalHistoryController::class, 'index'])->name('rental.history');
+
+
 
 
 
@@ -121,11 +122,6 @@ Route::prefix('admin')->middleware(['auth', 'adminMiddleware'])->group(function 
     Route::get('/test', function () {
         return view('admin.admincars.test');
     })->name('admin.test');
-
-    // Add Cars
-    Route::get('/addcars', function () {
-        return view('admin.addcars');
-    })->name('admin.addcars');
 
     // Rental Management
 Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
@@ -182,7 +178,9 @@ Route::middleware(['auth', 'adminMiddleware'])->group(function(){
     Route::get('/admin/admincars', [AdminCarsController::class, 'index'])->name('admin.admincars');
     Route::get('/admin/inventory', [InventoryController::class, 'index'])->name('admin.inventory');
     Route::get('/admin/employees', [EmployeesController::class, 'index'])->name('admin.employees');
-    Route::get('/admin/sales', [SalesController::class, 'index'])->name('admin.sales');
+Route::get('/admin/sales', [SalesController::class, 'index'])->name('admin.sales');
+Route::get('/admin/sales/download', [SalesController::class, 'downloadSales'])->name('admin.sales.download');
+
 });
 
 Route::get('/admin/add', function () {

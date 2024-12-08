@@ -12,10 +12,11 @@ public function store(Request $request)
     // Validate the form input
     $request->validate([
         'carName' => 'required|string', // Car name (e.g., Toyota Vios, Mitsubishi Mirage)
-        'carLicense' => 'required|string|unique:cars,carLicense', // License plate must be unique
+        'carLicense' => 'required|string|unique:cars,carLicense|size:6', // License plate must be unique
         'carPrice' => 'required|string', // Rental price
     ], [
         'carLicense.unique' => 'Car already added! The license plate you entered is already in use.', // Custom error message for duplicate license plate
+        'carLicense.size' => 'The car license plate must be exactly 6 characters.', // Custom error message for license plate size
     ]);
 
     // Create a new car record and store it in the database

@@ -51,6 +51,20 @@ public function processRent(Request $request)
     return redirect()->route('dashboard')->with('success', 'Rental request submitted successfully.');
 }
 
+public function showRentProcess(Request $request)
+{
+    $carName = $request->query('carName'); // Get carName from the query parameter
+    $car = Car::where('carName', $carName)->first(); // Fetch car details from the database
+
+    if (!$car) {
+        return redirect()->back()->with('error', 'Car not found.');
+    }
+
+    return view('rentprocess', [
+        'carName' => $car->carName,
+        'carPrice' => $car->carPrice,
+    ]);
+}
 
 
 }
