@@ -30,8 +30,7 @@
                     <span class="text-white">Back</span>
                 </button>
             </a>
-
-            <form action="{{ route('addemployee') }}" method="post" class="form">
+            <form action="{{ route('addemployee') }}" method="post" class="form" onsubmit="return validateForm()">
                 @csrf
                 <div class="form-group">
                     <input type="text" id="usertype" name="usertype" value="admin" required readonly hidden>
@@ -42,23 +41,44 @@
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="text" id="email" name="email" required="">
+                    <input type="email" id="email" name="email" required="">
                 </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required="">
-                </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="At least 8 chars, 1 uppercase, 1 digit, 1 special char" required="">
+            </div>
+
                 <div class="form-group">
                     <label for="confirmpass">Confirm Password</label>
                     <input type="password" id="confirmpass" name="confirmpass" required="">
                 </div>
                 <div style="display: flex; justify-content: center;">
-                <button style="width: 35%;" type="submit" class="bg-black text-white border-2 border-gray-300 px-4 py-2 text-sm font-medium rounded-md hover:bg-gray-700 hover:border-gray-400 transition duration-300 ease-in-out">
-                    Create  
-                </button>
-
+                    <button style="width: 35%;" type="submit" class="bg-black text-white border-2 border-gray-300 px-4 py-2 text-sm font-medium rounded-md hover:bg-gray-700 hover:border-gray-400 transition duration-300 ease-in-out">
+                        Create  
+                    </button>
                 </div>
             </form>
         </div>
     </div>
 </x-app-layout>
+
+<script>
+    function validateForm() {
+        const password = document.getElementById("password").value;
+        const confirmPassword = document.getElementById("confirmpass").value;
+
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+        if (!passwordRegex.test(password)) {
+            alert("Password must be at least 8 characters, include an uppercase letter, a lowercase letter, a digit, and a special character.");
+            return false;
+        }
+
+        if (password !== confirmPassword) {
+            alert("Passwords do not match!");
+            return false;
+        }
+
+        return true;
+    }
+</script>

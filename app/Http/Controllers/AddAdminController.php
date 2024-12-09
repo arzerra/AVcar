@@ -9,6 +9,7 @@ class AddAdminController extends Controller
 {
     public function add(Request $request)
     {
+
         $admin = new User();
         $admin->name = $request->name;
         $admin->email = $request->email;

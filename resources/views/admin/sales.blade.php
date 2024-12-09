@@ -9,8 +9,20 @@
             <div class="bg-transparent border border-gray-400 dark:border-gray-700 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100 ">
                     <!-- Filter form -->
-                    <form class="ml-40" method="GET" action="{{ route('admin.sales') }}">
+                    <form  method="GET" action="{{ route('admin.sales') }}">
                         <div class="flex space-x-4 items-center mb-4">
+                                    <!-- Customer Name filter -->
+                            <div class="flex items-center">
+                                <label for="customer_name" class="mr-2 text-white">Customer Name:</label>
+                                <input 
+                                    type="text" 
+                                    name="customer_name" 
+                                    id="customer_name" 
+                                    value="{{ request('customer_name') }}" 
+                                    class="text-black border border-gray-400 rounded px-2 py-1" 
+                                    placeholder="Customer Name"
+                                />
+                            </div>
                             <!-- Month filter -->
                             <div class="flex items-center">
                                 <label for="month" class="mr-2 text-white">Month:</label>
@@ -44,7 +56,7 @@
                             </div>
 
                             <!-- Filter button -->
-                            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500">Filter</button>
+                            <button type="submit" class="bg-blue-600 text-white px-8 py-2 rounded hover:bg-blue-500">Filter</button>
                         </div>
                     </form>
 

@@ -19,6 +19,7 @@
                                 <tr>
                                     <th class="border border-gray-400 dark:border-gray-700 px-4 py-2">Rent ID</th>
                                     <th class="border border-gray-400 dark:border-gray-700 px-4 py-2">Car Name</th>
+                                    <th class="border border-gray-400 dark:border-gray-700 px-4 py-2">Car License</th>
                                     <th class="border border-gray-400 dark:border-gray-700 px-4 py-2">Price</th>
                                     <th class="border border-gray-400 dark:border-gray-700 px-4 py-2">Date Requested</th>
                                     <th class="border border-gray-400 dark:border-gray-700 px-4 py-2">Duration</th>
@@ -32,6 +33,7 @@
                                     <tr>
                                         <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ $rent->rentID }}</td>
                                         <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ $rent->carName }}</td>
+                                        <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ $rent->carLicense }}</td>
                                         <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ $rent->carPrice }}/day</td>
                                         <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ \Carbon\Carbon::parse($rent->dateRequested)->format('M d, Y') }}</td>
                                         <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ $rent->duration }} days</td>

@@ -10,10 +10,11 @@ class SalesController extends Controller
 {
     public function index(Request $request)
 {
-    // Get the month and year filters from the request
+    // Get the filters from the request
     $month = $request->get('month');
     $year = $request->get('year');
     $specificDate = $request->get('date');
+    $customerName = $request->get('customer_name'); // New filter
 
     // Initialize the query for rents
     $rentsQuery = Rent::with('user', 'car');
@@ -29,24 +30,33 @@ class SalesController extends Controller
         $rentsQuery->whereDate('rentDate', Carbon::parse($specificDate)->format('Y-m-d'));
     }
 
+    // Filter by customer name if provided
+    if ($customerName) {
+        $rentsQuery->whereHas('user', function ($query) use ($customerName) {
+            $query->where('name', 'like', '%' . $customerName . '%');
+        });
+    }
+
     // Get the filtered rents and total sales
     $rents = $rentsQuery->get();
-    $totalSales = $rentsQuery->sum('total');
+    $totalSales = $rents->sum('total');
 
     return view('admin.sales', compact('rents', 'totalSales'));
 }
 
+
 public function downloadSales(Request $request)
 {
-    // Get the month, year, and specific date filters from the request
+    // Get the filters from the request
     $month = $request->get('month');
     $year = $request->get('year');
     $specificDate = $request->get('date');
+    $customerName = $request->get('customer_name'); // Add customer name filter
 
     // Initialize the query for rents
     $rentsQuery = Rent::with('user', 'car');
 
-    // Apply the filters (same as in the index method)
+    // Apply the filters
     if ($month && $year) {
         $rentsQuery->whereMonth('rentDate', $month)
                    ->whereYear('rentDate', $year);
@@ -56,26 +66,35 @@ public function downloadSales(Request $request)
         $rentsQuery->whereDate('rentDate', Carbon::parse($specificDate)->format('Y-m-d'));
     }
 
-    // Get the filtered rents
+    if ($customerName) {
+        $rentsQuery->whereHas('user', function ($query) use ($customerName) {
+            $query->where('name', 'like', '%' . $customerName . '%');
+        });
+    }
+
+    // Execute the query and get filtered rents
     $rents = $rentsQuery->get();
 
+    // Ensure correct data is being fetched
+    if ($rents->isEmpty()) {
+        abort(404, 'No records found for the given filters.');
+    }
+
     // Calculate the total sales
-    $totalSales = $rentsQuery->sum('total');
+    $totalSales = $rents->sum('total');
 
     // Prepare the description line
-    $description = '';
-
+    $description = 'Showing all sales';
     if ($specificDate) {
-        // Specific date filter
         $description = 'Showing sales for ' . Carbon::parse($specificDate)->format('F d, Y');
     } elseif ($month && $year) {
-        // Month and year filter
         $startDate = Carbon::create($year, $month, 1)->format('F d, Y');
         $endDate = Carbon::create($year, $month, Carbon::daysInMonth($year, $month))->format('F d, Y');
         $description = 'Showing sales from ' . $startDate . ' to ' . $endDate;
-    } else {
-        // No filters applied, showing all sales
-        $description = 'Showing all sales';
+    }
+
+    if ($customerName) {
+        $description = 'Showing all sales records for customer "' . $customerName . '"';
     }
 
     // Prepare CSV data
@@ -97,7 +116,7 @@ public function downloadSales(Request $request)
     }
 
     // Add total sales row at the end of the CSV
-    $csvData[] = ['Total Sales', '', '', '', ''. number_format($totalSales, 2)];
+    $csvData[] = ['Total Sales', '', '', '', number_format($totalSales, 2)];
 
     // Set the filename for the download
     $filename = 'AVCar_Sales_' . now()->format('Ymd') . '.csv';
@@ -118,8 +137,5 @@ public function downloadSales(Request $request)
     fclose($handle);
     exit;
 }
-
-
-
 
 }
