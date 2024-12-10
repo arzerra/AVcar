@@ -54,7 +54,7 @@
                                         <th class="border border-gray-400 dark:border-gray-700 px-4 py-2">Car Type</th>
                                         <th class="border border-gray-400 dark:border-gray-700 px-4 py-2">Car Price</th>
                                         <th class="border border-gray-400 dark:border-gray-700 px-4 py-2">Car Status</th>
-                                        <th class="border border-gray-400 dark:border-gray-700 px-4 py-2 text-center">Delete</th>
+                                        <th class="border border-gray-400 dark:border-gray-700 px-4 py-2 text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -72,17 +72,29 @@
                                             @endif">
                                             {{ ucfirst($car->carStatus) }}
                                         </td>
-                                            <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">
-                                            <form action="{{ route('admin.deleteCar', $car) }}" method="POST" id="delete-form-{{ $car->id }}" onsubmit="return confirmDeletion(event, '{{ $car->carStatus }}', {{ $car->id }})">
-                                                @csrf
-                                                @method('DELETE')
-                                                <div class="flex justify-center">
-                                                    <button type="submit" class="bg-transparent text-red-500 border-2 border-gray-300 px-4 py-1 text-sm font-small rounded-md hover:bg-gray-700 hover:border-gray-400 transition duration-300 ease-in-out">
-                                                        x
-                                                    </button>
+<td class="border border-gray-400 dark:border-gray-700 py-2">
+                                                <div class="flex justify-center space-x-2">
+                                                    <!-- Return Button -->
+                                                    <form action="{{ route('admin.returnCar', $car) }}" method="POST" id="return-form-{{ $car->id }}" onsubmit="return confirmReturn('{{ $car->carName }}', '{{ $car->carLicense }}')">
+                                                        @csrf
+                                                        <button 
+                                                            type="submit" 
+                                                            class="bg-transparent text-white-500 border-2 border-gray-300 px-4 py-1 text-sm font-small rounded-md transition duration-300 ease-in-out
+                                                            {{ $car->carStatus === 'available' ? 'bg-gray-500 cursor-not-allowed' : 'hover:bg-green-700 hover:border-gray-400' }}"
+                                                            {{ $car->carStatus === 'available' ? 'disabled' : '' }}>
+                                                            Return
+                                                        </button>
+                                                    </form>
+                                                    <!-- Delete Button -->
+                                                    <form action="{{ route('admin.deleteCar', $car) }}" method="POST" id="delete-form-{{ $car->id }}" onsubmit="return confirmDeletion(event, '{{ $car->carStatus }}', {{ $car->id }})">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="bg-transparent text-white-500 border-2 border-gray-300 px-4 py-1 text-sm font-small rounded-md hover:bg-red-700 hover:border-gray-400 transition duration-300 ease-in-out">
+                                                            Delete
+                                                        </button>
+                                                    </form>
                                                 </div>
-                                            </form>
-                                        </td>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -119,32 +131,32 @@
         </div>
     </div>
 
-    <!-- JavaScript for toggling the tables and auto-submit on checkbox -->
+    <!-- JavaScript for toggling tables -->
     <script>
         document.getElementById("inventoryBtn").addEventListener("click", function() {
             document.getElementById("inventoryTable").classList.remove("hidden");
             document.getElementById("stocksTable").classList.add("hidden");
         });
-
         document.getElementById("stocksBtn").addEventListener("click", function() {
             document.getElementById("stocksTable").classList.remove("hidden");
             document.getElementById("inventoryTable").classList.add("hidden");
         });
-
-        // Auto-submit the form when checkbox is toggled
+        // Auto-submit on checkbox toggle
         document.getElementById("available").addEventListener("change", function() {
             document.getElementById("searchForm").submit();
         });
-            function confirmDeletion(event, status, carId) {
-        if (status === 'rented') {
-            // Prevent form submission if the car is rented
-            event.preventDefault();
-            alert('This car is currently rented and cannot be deleted.');
-        } else {
-            // Proceed with the deletion if the car is not rented
-            return confirm('Are you sure you want to delete this car?');
+        function confirmDeletion(event, status, carId) {
+            if (status === 'rented') {
+                event.preventDefault();
+                alert('This car is currently rented and cannot be deleted.');
+            } else {
+                return confirm('Are you sure you want to delete this car?');
+            }
         }
-    }
+        function confirmReturn(carName, carLicense) {
+            return confirm(`Are you sure you want to mark "${carName}" (License: "${carLicense}") as returned?`);
+        }
     </script>
-
 </x-app-layout>
+                                            
+  

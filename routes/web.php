@@ -129,6 +129,7 @@ Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboa
     Route::post('decline-rent/{id}', [AdminController::class, 'declineRent'])->name('admin.declineRent');
 Route::get('/admin/inventory', [AdminController::class, 'index'])->name('admin.inventory');
 Route::delete('/admin/inventory/{car}', [InventoryController::class, 'destroy'])->name('admin.deleteCar');
+Route::post('/admin/returnCar/{car}', [InventoryController::class, 'returnCar'])->name('admin.returnCar');
 
 
 

@@ -46,6 +46,20 @@ public function destroy(Car $car)
     return redirect()->route('admin.inventory')->with('success', 'Car deleted successfully');
 }
 
+public function returnCar(Request $request, Car $car)
+{
+    // Check if the car is currently rented
+    if ($car->carStatus !== 'rented') {
+        return redirect()->route('admin.inventory')->with('error', 'Only rented cars can be returned.');
+    }
+
+    // Update the car's status to "available"
+    $car->update([
+        'carStatus' => 'available',
+    ]);
+
+    return redirect()->route('admin.inventory')->with('success', 'Car returned successfully and is now available.');
+}
 
 
 

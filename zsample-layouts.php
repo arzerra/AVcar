@@ -820,3 +820,6 @@
     closeModalButton.addEventListener('click', () => {
         carModal.classList.add('hidden'); // Hide the modal
     }); -->
+
+
+    
