@@ -10,13 +10,30 @@ use Carbon\Carbon;
 
 class UserController extends Controller
 {
-    public function index()
-    {
-        $userId = auth()->id(); // Get logged-in user's ID
-        $rentals = Rent::where('userID', $userId)->get(); // Fetch rentals for the user
+public function index()
+{
+    $userId = auth()->id(); // Get logged-in user's ID
 
-        return view('dashboard', compact('rentals'));
-    }
+    $rentals = Rent::where('userID', $userId)
+        ->get()
+        ->filter(function ($rent) {
+            // Keep rentals with status 'pending'
+            if ($rent->rentStatus === 'pending') {
+                return true;
+            }
+
+            // Keep rentals with status 'rented' if it's within 24 hours
+            if ($rent->rentStatus === 'rented') {
+                $requestTime = \Carbon\Carbon::parse($rent->dateRequested);
+                return $requestTime->diffInHours(now()) <= 24;
+            }
+
+            return false; // Exclude others
+        });
+
+    return view('dashboard', compact('rentals'));
+}
+
 
     public function cancelRental($id)
     {
