@@ -44,7 +44,12 @@
                                         <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">₱{{ $rent->total }}</td>
                                         <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ $rent->pickup }}</td>
                                         <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ $rent->dropoff }}</td>
-                                        <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">{{ ucfirst($rent->rentStatus) }}</td>
+                                        <td class="border border-gray-400 dark:border-gray-700 px-4 py-2
+                                            @if($rent->rentStatus == 'rented')
+                                                text-green-500
+                                            @endif">
+                                            {{ ucfirst($rent->rentStatus) }}
+                                        </td>
                                         <td class="border border-gray-400 dark:border-gray-700 px-4 py-2">
                                             <form action="{{ route('dashboard.cancelRental', $rent->rentID) }}" method="POST" 
                                                   onsubmit="return confirm('Are you sure you want to cancel this rental?');">

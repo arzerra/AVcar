@@ -75,7 +75,21 @@ Route::get('/rentprocess', function () {
 
 Route::post('/process-rent', [RentController::class, 'store'])->name('processRent');
 
-Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
+    // Protected routes that require email verification
+    Route::get('/dashboard', [UserController::class, 'index'])->name('dashboard');
+    // Other routes...
+});
+
+Route::get('/email/verify', function () {
+    return view('auth.verify');
+})->middleware('auth')->name('verification.notice');
+// Show the registration form (GET request)
+Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
+
+// Handle the registration request (POST request)
+Route::post('/register', [RegisteredUserController::class, 'store']);
+
 Route::post('/dashboard/rentals/{id}/cancel', [UserController::class, 'cancelRental'])->name('dashboard.cancelRental');
 Route::post('/dashboard/cancel/{id}', [UserController::class, 'cancelRental'])->name('dashboard.cancelRental');
 Route::delete('renthistory/delete/{id}', [RentalHistoryController::class, 'deleteRental'])->name('user.renthistory.deleteRental');
